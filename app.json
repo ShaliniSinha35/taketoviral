@@ -1,15 +1,15 @@
 {
   "expo": {
     "name": "TakeToViral",
-    "slug": "TakeToViral",
+    "slug": "taketoviral",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
     "splash": {
       "image": "./assets/splash.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "resizeMode": "cover",
+      "backgroundColor": "#ffffff"    
     },
     "ios": {
       "supportsTablet": true
@@ -18,10 +18,33 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+   
+      "permissions": ["CAMERA", "READ_EXTERNAL_STORAGE", "WRITE_EXTERNAL_STORAGE"]
+,
+      "package": "com.zenwebmaniasolutions.taketoviral"
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "f1f29108-76ef-4331-8084-f4d3a5ce2502"
+      } ,
+       "googleSignIn": {
+        "androidClientId": "387102626056-6mqrkpttjsd23d79d2anqndd6dt7gc7l.apps.googleusercontent.com"
+      }
+    },
+    "scheme": "taketoviral",
+    "owner": "zenwebmaniasolution",
+    "runtimeVersion": {
+      "policy": "appVersion"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/f1f29108-76ef-4331-8084-f4d3a5ce2502",
+      "enabled": true,
+      "checkAutomatically": "ON_LOAD",
+      "fallbackToCacheTimeout": 0
     }
   }
 }
