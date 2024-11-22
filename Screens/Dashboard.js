@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, Dimensions, Image, FlatList, ImageBackground } from 'react-native';
+import { View, Text, StyleSheet, Dimensions, Image, FlatList, ImageBackground, ScrollView } from 'react-native';
 import React from 'react';
 import Header from '../Components/Header';
 import { TouchableOpacity } from 'react-native';
@@ -53,6 +53,8 @@ const Dashboard = ({navigation}) => {
         </Text>
       </View>
 
+      <ScrollView>
+
       <View style={{ marginTop: 1, paddingHorizontal: 15, paddingVertical: 15 }}>
         <FlatList
           data={dashboards}
@@ -84,7 +86,7 @@ const Dashboard = ({navigation}) => {
 
                 <Image
                   source={item.image}
-                  style={{ height: 110, width: 120, resizeMode: 'contain' }}
+                  style={{ height: 110, width: width * 0.32, resizeMode: 'contain' }}
                 />
 
                 <LinearGradient
@@ -102,6 +104,7 @@ const Dashboard = ({navigation}) => {
           )}
         />
       </View>
+      </ScrollView>
     </ImageBackground>
   );
 };
@@ -109,8 +112,8 @@ const Dashboard = ({navigation}) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    paddingBottom: 100,
+    // backgroundColor: '#fff',
+    // paddingBottom: 100,
   },
   gradientBorder: {
     borderRadius: 10,

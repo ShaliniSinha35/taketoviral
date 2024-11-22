@@ -40,7 +40,7 @@ const LoginScreen = ({ navigation }) => {
         </View>
 
         <View style={styles.heading}>
-          <Text style={{ fontWeight: "bold", letterSpacing: 1 }}>Sign In to continue</Text>
+          <Text allowFontScaling={false} style={{ fontWeight: "bold", letterSpacing: 1 }}>Sign In to continue</Text>
         </View>
 
         <ScrollView keyboardShouldPersistTaps='handled'>
@@ -81,7 +81,7 @@ const LoginScreen = ({ navigation }) => {
 
                   </View>
                 </LinearGradient>
-                {errors.email && <Text style={{ color: "red" }}>Email is required</Text>}
+                {errors.email && <Text allowFontScaling={false} style={{ color: "red" }}>Email is required</Text>}
               </View>
 
 
@@ -116,7 +116,7 @@ const LoginScreen = ({ navigation }) => {
                   </View>
                 </LinearGradient>
 
-                {errors.password && <Text style={{ color: "red" }}>Password is required</Text>}
+                {errors.password && <Text allowFontScaling={false} style={{ color: "red" }}>Password is required</Text>}
 
               </View>
 
@@ -131,7 +131,7 @@ const LoginScreen = ({ navigation }) => {
               >
 
                 <TouchableOpacity onPress={handleSubmit(onSubmit)} style={{ justifyContent: "center", alignItems: "center", width: "100%" }}>
-                  <Text style={{ color: "#fff", fontWeight: "bold", textAlign: "center", fontSize: 18 }}>Sign In</Text>
+                  <Text allowFontScaling={false} style={{ color: "#fff", fontWeight: "bold", textAlign: "center", fontSize: 18 }}>Sign In</Text>
                 </TouchableOpacity>
 
               </LinearGradient>

@@ -25,6 +25,16 @@ import PersonalDetails from '../Screens/PersonalDetails';
 import ContactDetails from '../Screens/ContactDetails';
 import EducationDetails from '../Screens/EducationDetails';
 import SocialDetails from '../Screens/SocialDetails';
+import ImagePromotion from '../Screens/ImagePromotion';
+import SocialMediaPromotion from '../Screens/SocialMediaPromotion';
+import AudioPromotion from '../Screens/AudioPromotion';
+import EarningScreen from '../Screens/EarningScreen';
+import TwitterScreen from '../Screens/TwitterScreen';
+import InstaScreen from '../Screens/InstaScreen';
+import FacebookScreen from '../Screens/FacebookScreen';
+import YoutubeScreen from '../Screens/YoutubeScreen';
+import Audio from '../Screens/Audio';
+import FacebookVideos from '../Screens/FacebookVideos';
 
 
 const Stack = createStackNavigator();
@@ -89,6 +99,16 @@ export const AppNavigator = () => {
                 <Stack.Screen name="contact" options={{ headerShown: false }} component={ContactDetails} />
                 <Stack.Screen name="education" options={{ headerShown: false }} component={EducationDetails} />
                 <Stack.Screen name="social" options={{ headerShown: false }} component={SocialDetails} />
+                <Stack.Screen name="imagePromotion" options={{ headerShown: false }} component={ImagePromotion} />
+                <Stack.Screen name="socialPromotion" options={{ headerShown: false }} component={SocialMediaPromotion} />
+                <Stack.Screen name="audioPromotion" options={{ headerShown: false }} component={AudioPromotion} />
+                <Stack.Screen name="earningScreen" options={{ headerShown: false }} component={EarningScreen} />
+                <Stack.Screen name="youtubeScreen" options={{ headerShown: false }} component={YoutubeScreen} />
+                <Stack.Screen name="facebookScreen" options={{ headerShown: false }} component={FacebookScreen} />
+                <Stack.Screen name="instaScreen" options={{ headerShown: false }} component={InstaScreen} />
+                <Stack.Screen name="twitterScreen" options={{ headerShown: false }} component={TwitterScreen} />
+                <Stack.Screen name="audio" options={{ headerShown: false }} component={Audio} />
+                <Stack.Screen name="facebookVideos" options={{ headerShown: false }} component={FacebookVideos} />
 
 
 

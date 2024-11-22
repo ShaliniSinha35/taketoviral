@@ -1,11 +1,12 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { View, StyleSheet, TouchableOpacity, Text, Alert, Linking } from 'react-native';
+import { View, StyleSheet, TouchableOpacity, Text, Alert, Linking, ImageBackground } from 'react-native';
 import YoutubePlayer from "react-native-youtube-iframe";
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { useColorScheme } from 'react-native';
 import { useRoute } from '@react-navigation/native';
 import { Circle } from 'react-native-progress';
 import Header from '../Components/Header';
+import { LinearGradient } from 'expo-linear-gradient';
 
 const PlayVideo = ({ navigation }) => {
   const route = useRoute();
@@ -89,8 +90,15 @@ const PlayVideo = ({ navigation }) => {
   }, [watchDuration]);
 
   return (
-    <View style={styles.container}>
+    <ImageBackground source={require("../assets/bg.png")} style={styles.container}>
       <Header navigation={navigation}></Header>
+      <LinearGradient
+            key={item.id}
+            colors={['#E7258E', '#C93393', '#A84497', '#794EA0']}
+            start={[0, 0]}
+            end={[1, 1]}
+            style={styles.gradientBorder}
+          >
       <View key={item.id} style={styles.videoContainer}>
         {playing && progress && !timerReached && (
           <View style={styles.timerContainer}>
@@ -107,11 +115,12 @@ const PlayVideo = ({ navigation }) => {
               unfilledColor={scheme === 'dark' ? "#333" : "lightgray"}
             />
           </View>
+        
         )}
 
         <YoutubePlayer
           ref={playerRef}
-          height={220}
+          height={200}
           play={playing}
           videoId={item.videoId}
           initialPlayerParams={{
@@ -122,8 +131,10 @@ const PlayVideo = ({ navigation }) => {
           onReady={onReady}
           onProgress={onProgress}
         />
+                  <Text allowFontScaling={false}style={{borderWidth:0.4,borderColor:"#D0D0D0",height:0.5,width:"100%",marginTop:0,marginBottom:5}}></Text>
 
         <Text allowFontScaling={false} style={styles.videoTitle}>{item.title}</Text>
+        <Text allowFontScaling={false}style={{borderWidth:0.4,borderColor:"#D0D0D0",height:0.5,width:"100%",marginTop:5,marginBottom:5}}></Text>
 
         <View style={styles.buttonContainer}>
           <View style={styles.viewsContainer}>
@@ -139,6 +150,7 @@ const PlayVideo = ({ navigation }) => {
             <Text allowFontScaling={false}  style={[styles.buttonText, { color: scheme === "dark" ? "white" : "black" }]}>Subscribe</Text>
           </TouchableOpacity>
         </View>
+        <Text allowFontScaling={false}style={{borderWidth:0.4,borderColor:"#D0D0D0",height:0.5,width:"100%",marginTop:5,marginBottom:5}}></Text>
 
         <Text allowFontScaling={false}  style={{ color: scheme === 'dark' ? "white" : "black", textAlign: 'center' }}>
           Watch Duration: {formatTime(watchDuration)} / {formatTime(videoLength)}
@@ -152,22 +164,24 @@ const PlayVideo = ({ navigation }) => {
           </TouchableOpacity>
         )}
       </View>
-    </View>
+      </LinearGradient>
+    </ImageBackground>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff"
+    backgroundColor: "#fff",
+    
   },
   videoContainer: {
-    marginVertical: 10,
+    // marginVertical: 10,
     backgroundColor: '#fff',
     padding: 10,
     borderRadius: 10,
     elevation: 2,
-    marginTop: 20
+    // marginTop: 20
   },
   buttonContainer: {
     flexDirection: 'row',
@@ -197,8 +211,8 @@ const styles = StyleSheet.create({
   },
   crossButton: {
     position: 'absolute',
-    top: -10,
-    right: 170,
+    top: -15,
+    right: 150,
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
     borderRadius: 20,
     alignItems: "center",
@@ -218,6 +232,17 @@ const styles = StyleSheet.create({
     letterSpacing: 0.5,
     marginLeft: 10,
     color: "#b5179e"
+  },
+
+  gradientBorder: {
+    padding: 2,
+    borderRadius: 10,
+    shadowColor: '#000',
+    shadowOpacity: 0.1,
+    shadowRadius: 5,
+    elevation: 5,
+    margin:20,
+    marginBottom: 10
   },
 });
 

@@ -89,7 +89,7 @@ const ProfileScreen = ({ navigation }) => {
               style={styles.profileImage}
             />
             <TouchableOpacity style={styles.editButton}>
-              <Text style={styles.editButtonText}>Edit Profile Image</Text>
+              <Text allowFontScaling={false} style={styles.editButtonText}>Edit Profile Image</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -100,7 +100,7 @@ const ProfileScreen = ({ navigation }) => {
           {/* Personal Details */}
 
           <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}>
-            <Text style={styles.sectionTitle}>Personal Details</Text>
+            <Text allowFontScaling={false} style={styles.sectionTitle}>Personal Details</Text>
             <TouchableOpacity onPress={toggleProfileEditing}>
 
               {!isProfileEditing ? <AntDesign name="edit" size={20} color="#C93393" /> :
@@ -114,7 +114,7 @@ const ProfileScreen = ({ navigation }) => {
 
           {isProfileEditing &&
             <View>
-              <Text style={styles.dropdownLabel}>Full Name</Text>
+              <Text allowFontScaling={false} style={styles.dropdownLabel}>Full Name</Text>
 
 
               <LinearGradient
@@ -129,7 +129,7 @@ const ProfileScreen = ({ navigation }) => {
 
 
               {/* Gender Dropdown */}
-              <Text style={styles.dropdownLabel}>Gender</Text>
+              <Text allowFontScaling={false} style={styles.dropdownLabel}>Gender</Text>
 
               <LinearGradient
                 colors={["#d6336c", "#7209b7"]}
@@ -150,7 +150,7 @@ const ProfileScreen = ({ navigation }) => {
 
 
               {/* Hobbies */}
-              <Text style={styles.dropdownLabel}>Hobbies</Text>
+              <Text allowFontScaling={false} style={styles.dropdownLabel}>Hobbies</Text>
 
               <LinearGradient
                 colors={["#d6336c", "#7209b7"]}
@@ -164,7 +164,7 @@ const ProfileScreen = ({ navigation }) => {
 
               {/* Date of Birth Calendar */}
 
-              <Text style={styles.dropdownLabel}>D.O.B</Text>
+              <Text allowFontScaling={false} style={styles.dropdownLabel}>D.O.B</Text>
               <LinearGradient
                 colors={["#d6336c", "#7209b7"]}
                 start={{ x: 0, y: 0 }}
@@ -175,7 +175,7 @@ const ProfileScreen = ({ navigation }) => {
                   onPress={() => setShowDatePicker(true)}
                   style={styles.innerView}
                 >
-                  <Text style={styles.datePickerText}>
+                  <Text allowFontScaling={false} style={styles.datePickerText}>
                     {dateOfBirth.toDateString()}
                   </Text>
                 </TouchableOpacity>
@@ -200,7 +200,7 @@ const ProfileScreen = ({ navigation }) => {
           >
 
             <TouchableOpacity style={{ alignItems: "center", justifyContent: "center" }}>
-              <Text style={styles.submitButtonText}>Save Details</Text>
+              <Text allowFontScaling={false}style={styles.submitButtonText}>Save Details</Text>
             </TouchableOpacity>
 
 
@@ -210,10 +210,11 @@ const ProfileScreen = ({ navigation }) => {
           }
 
 
+<Text allowFontScaling={false} style={{borderWidth:0.4,borderColor:"#D0D0D0",height:0.5,width:"100%",marginTop:5,marginBottom:5}}></Text>
 
           {/* Contact Information */}
           <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}>
-            <Text style={styles.sectionTitle}>Contact Information</Text>
+            <Text allowFontScaling={false} style={styles.sectionTitle}>Contact Information</Text>
             <TouchableOpacity onPress={toggleContactEditing}>
 
               {!isContactEditing ? <AntDesign name="edit" size={20} color="#C93393" /> :
@@ -229,7 +230,7 @@ const ProfileScreen = ({ navigation }) => {
 
             <View>
 
-              <Text style={styles.dropdownLabel}>Email</Text>
+              <Text allowFontScaling={false} style={styles.dropdownLabel}>Email</Text>
 
               <LinearGradient
                 colors={["#d6336c", "#7209b7"]}
@@ -242,7 +243,7 @@ const ProfileScreen = ({ navigation }) => {
               </LinearGradient>
 
 
-              <Text style={styles.dropdownLabel}>Mobile Number</Text>
+              <Text allowFontScaling={false} style={styles.dropdownLabel}>Mobile Number</Text>
               <LinearGradient
                 colors={["#d6336c", "#7209b7"]}
                 start={{ x: 0, y: 0 }}
@@ -255,7 +256,7 @@ const ProfileScreen = ({ navigation }) => {
 
 
 
-              <Text style={styles.dropdownLabel}>WhatsApp Number</Text>
+              <Text allowFontScaling={false} style={styles.dropdownLabel}>WhatsApp Number</Text>
               <LinearGradient
                 colors={["#d6336c", "#7209b7"]}
                 start={{ x: 0, y: 0 }}
@@ -267,7 +268,7 @@ const ProfileScreen = ({ navigation }) => {
               </LinearGradient>
 
 
-              <Text style={styles.dropdownLabel}>Address</Text>
+              <Text allowFontScaling={false} style={styles.dropdownLabel}>Address</Text>
 
               <LinearGradient
                 colors={["#d6336c", "#7209b7"]}
@@ -289,7 +290,7 @@ const ProfileScreen = ({ navigation }) => {
           >
 
             <TouchableOpacity style={{ alignItems: "center", justifyContent: "center" }}>
-              <Text style={styles.submitButtonText}>Save Details</Text>
+              <Text allowFontScaling={false} style={styles.submitButtonText}>Save Details</Text>
             </TouchableOpacity>
 
 
@@ -299,11 +300,12 @@ const ProfileScreen = ({ navigation }) => {
 
           }
 
+<Text allowFontScaling={false} style={{borderWidth:0.4,borderColor:"#D0D0D0",height:0.5,width:"100%",marginTop:5,marginBottom:5}}></Text>
 
 
           {/* Educational Information */}
           <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
-            <Text style={styles.sectionTitle}>Educational Information</Text>
+            <Text allowFontScaling={false} style={styles.sectionTitle}>Educational Information</Text>
 
             <TouchableOpacity onPress={toggleEducationEditing}>
               {!isEducationEditing ? <AntDesign name="edit" size={20} color="#C93393" /> :
@@ -317,8 +319,8 @@ const ProfileScreen = ({ navigation }) => {
           {isEducationEditing && <View>
 
 
-            <Text style={styles.subSectionTitle}>Higher Qualification</Text>
-            <Text style={styles.dropdownLabel}>Degree</Text>
+            <Text allowFontScaling={false} style={styles.subSectionTitle}>Higher Qualification</Text>
+            <Text allowFontScaling={false} style={styles.dropdownLabel}>Degree</Text>
 
             <LinearGradient
               colors={["#d6336c", "#7209b7"]}
@@ -329,7 +331,7 @@ const ProfileScreen = ({ navigation }) => {
 
               <TextInput style={styles.innerView} placeholder="" />
             </LinearGradient>
-            <Text style={styles.dropdownLabel}>University/College Name</Text>
+            <Text allowFontScaling={false} style={styles.dropdownLabel}>University/College Name</Text>
 
             <LinearGradient
               colors={["#d6336c", "#7209b7"]}
@@ -340,7 +342,7 @@ const ProfileScreen = ({ navigation }) => {
 
               <TextInput style={styles.innerView} placeholder="" />
             </LinearGradient>
-            <Text style={styles.dropdownLabel}>Specialization/Branch</Text>
+            <Text allowFontScaling={false} style={styles.dropdownLabel}>Specialization/Branch</Text>
 
             <LinearGradient
               colors={["#d6336c", "#7209b7"]}
@@ -351,7 +353,7 @@ const ProfileScreen = ({ navigation }) => {
 
               <TextInput style={styles.innerView} placeholder="" />
             </LinearGradient>
-            <Text style={styles.dropdownLabel}>Year of Passing</Text>
+            <Text allowFontScaling={false} style={styles.dropdownLabel}>Year of Passing</Text>
             <LinearGradient
               colors={["#d6336c", "#7209b7"]}
               start={{ x: 0, y: 0 }}
@@ -361,7 +363,7 @@ const ProfileScreen = ({ navigation }) => {
 
               <TextInput style={styles.innerView} placeholder="" keyboardType="numeric" />
             </LinearGradient>
-            <Text style={styles.dropdownLabel}>Percentage/Grade/CGPA</Text>
+            <Text allowFontScaling={false} style={styles.dropdownLabel}>Percentage/Grade/CGPA</Text>
 
             <LinearGradient
               colors={["#d6336c", "#7209b7"]}
@@ -383,7 +385,7 @@ const ProfileScreen = ({ navigation }) => {
           >
 
             <TouchableOpacity style={{ alignItems: "center", justifyContent: "center" }}>
-              <Text style={styles.submitButtonText}>Save Details</Text>
+              <Text allowFontScaling={false} style={styles.submitButtonText}>Save Details</Text>
             </TouchableOpacity>
 
 
@@ -391,10 +393,11 @@ const ProfileScreen = ({ navigation }) => {
         </View>
           </View>}
 
+          <Text allowFontScaling={false} style={{borderWidth:0.4,borderColor:"#D0D0D0",height:0.5,width:"100%",marginTop:5,marginBottom:5}}></Text>
 
           {/* social media */}
           <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}>
-            <Text style={styles.sectionTitle}>Social Media Links</Text>
+            <Text allowFontScaling={false} style={styles.sectionTitle}>Social Media Links</Text>
             <TouchableOpacity onPress={toggleSocialEditing}>
 
               {!isSocialEditing ? <AntDesign name="edit" size={20} color="#C93393" /> :
@@ -410,7 +413,7 @@ const ProfileScreen = ({ navigation }) => {
 
             <View>
 
-              <Text style={styles.dropdownLabel}>Youtube</Text>
+              <Text allowFontScaling={false} style={styles.dropdownLabel}>Youtube</Text>
 
               <LinearGradient
                 colors={["#d6336c", "#7209b7"]}
@@ -423,7 +426,7 @@ const ProfileScreen = ({ navigation }) => {
               </LinearGradient>
 
 
-              <Text style={styles.dropdownLabel}>Facebook</Text>
+              <Text allowFontScaling={false} style={styles.dropdownLabel}>Facebook</Text>
               <LinearGradient
                 colors={["#d6336c", "#7209b7"]}
                 start={{ x: 0, y: 0 }}
@@ -436,7 +439,7 @@ const ProfileScreen = ({ navigation }) => {
 
 
 
-              <Text style={styles.dropdownLabel}>Instagram</Text>
+              <Text allowFontScaling={false} style={styles.dropdownLabel}>Instagram</Text>
               <LinearGradient
                 colors={["#d6336c", "#7209b7"]}
                 start={{ x: 0, y: 0 }}
@@ -448,7 +451,7 @@ const ProfileScreen = ({ navigation }) => {
               </LinearGradient>
 
 
-              <Text style={styles.dropdownLabel}>Twitter</Text>
+              <Text allowFontScaling={false} style={styles.dropdownLabel}>Twitter</Text>
 
               <LinearGradient
                 colors={["#d6336c", "#7209b7"]}
@@ -470,7 +473,7 @@ const ProfileScreen = ({ navigation }) => {
           >
 
             <TouchableOpacity style={{ alignItems: "center", justifyContent: "center" }}>
-              <Text style={styles.submitButtonText}>Save Details</Text>
+              <Text allowFontScaling={false} style={styles.submitButtonText}>Save Details</Text>
             </TouchableOpacity>
 
 
@@ -506,7 +509,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     marginTop: 10,
     height: 128,
-    width: 125,
+    // width: 125,
     borderRadius: 90,
     backgroundColor: "#d6336c"
   },
@@ -519,16 +522,16 @@ const styles = StyleSheet.create({
   editButton: {
     marginTop: 20,
     backgroundColor: "#d6336c",
-    paddingHorizontal: 12,
+    paddingHorizontal: 18,
     paddingVertical: 6,
     borderRadius: 5,
   },
   editButtonText: {
     color: "#fff",
-    fontSize: 14,
+    fontSize: 12,
   },
   sectionTitle: {
-    fontSize: 17,
+    fontSize: 15,
     fontWeight: "bold",
     marginVertical: 15,
   },

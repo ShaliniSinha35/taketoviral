@@ -6,15 +6,23 @@ import MaskedView from '@react-native-community/masked-view';
 import { MaterialIcons } from '@expo/vector-icons';
 import axios from 'axios'; // Install axios for API calls
 import Icon from 'react-native-vector-icons/FontAwesome'; 
+import Header from '../Components/Header';
 
 const width = Dimensions.get('screen').width;
 const API_KEY = 'AIzaSyBlLKD5rjAt8LCvdc6ZUiFxvZLJw7ssf5E'; // Replace this with your API key
 
-const Section3 = ({navigation}) => {
+const FacebookScreen = ({navigation}) => {
   const [youtubeVideos, setYoutubeVideos] = useState([
     { id: 0, videoId: "R9oy81eji48", subscribe: "https://www.youtube.com/@arideejay", views: 0, liked: false, watchDuration: 0, title: '' },
     { id: 1, videoId: "aCghEsTPhdA", subscribe: "https://www.youtube.com/@cgluca", views: 0, liked: false, watchDuration: 0, title: '' },
     { id: 2, videoId: "gUKAnQsz-Lo", subscribe: "https://www.youtube.com/@EpicScenery8K", views: 0, liked: false, watchDuration: 0, title: '' },
+    { id: 3, videoId: "R9oy81eji48", subscribe: "https://www.youtube.com/@arideejay", views: 0, liked: false, watchDuration: 0, title: '' },
+    { id: 4, videoId: "aCghEsTPhdA", subscribe: "https://www.youtube.com/@cgluca", views: 0, liked: false, watchDuration: 0, title: '' },
+    { id: 5, videoId: "aCghEsTPhdA", subscribe: "https://www.youtube.com/@cgluca", views: 0, liked: false, watchDuration: 0, title: '' },
+    { id: 6, videoId: "R9oy81eji48", subscribe: "https://www.youtube.com/@arideejay", views: 0, liked: false, watchDuration: 0, title: '' },
+    { id: 7, videoId: "aCghEsTPhdA", subscribe: "https://www.youtube.com/@cgluca", views: 0, liked: false, watchDuration: 0, title: '' },
+    { id: 8, videoId: "gUKAnQsz-Lo", subscribe: "https://www.youtube.com/@EpicScenery8K", views: 0, liked: false, watchDuration: 0, title: '' },
+
   ]);
 
   useEffect(() => {
@@ -45,7 +53,7 @@ const Section3 = ({navigation}) => {
   };
 
   const renderItem = ({ item }) => (
-    <View style={styles.card}>
+    <View key={item.id} style={styles.card}>
       {/* YouTube Icon */}
      
 
@@ -59,7 +67,7 @@ const Section3 = ({navigation}) => {
 
       <View style={styles.iconContainer}>
                             {/* <Icon name="youtube-play" size={28} color="red" /> */}
-<Image source={require("../assets/mo/cy.png")} style={{height:25,width:25,resizeMode:"contain"}}></Image>
+<Image source={require("../assets/mo/cf.png")} style={{height:25,width:25,resizeMode:"contain"}}></Image>
         {/* <MaterialIcons name="video-library" size={30} color="#FF0000" /> */}
       </View>
 
@@ -67,41 +75,40 @@ const Section3 = ({navigation}) => {
       <Text allowFontScaling={false} numberOfLines={2} style={styles.videoTitle}>{item.title}</Text>
 
       {/* Watch Now Button */}
-      <TouchableOpacity onPress={()=>navigation.navigate("playVideo",{item:item})} style={styles.button}>
+      <View style={{ alignItems: "center", gap: 5 }}>
+                  <LinearGradient
+                    colors={['#E7258E', '#C93393', '#A84497', '#794EA0']}
+                    start={[0, 0]}
+                    end={[1, 1]}
+                    style={styles.buttonBorder}
+                  >
+  <TouchableOpacity onPress={()=>navigation.navigate("facebookVideos",{item:item})} style={styles.button}>
         <Text allowFontScaling={false} style={styles.buttonText}>Watch Now</Text>
       </TouchableOpacity>
+                  </LinearGradient>
+                </View>
+
     </View>
   );
 
   return (
-    <ImageBackground source={require("../assets/image/3.png")} style={styles.section}>
-      <View style={{flexDirection:"row",width:width,justifyContent:"space-between",alignItems:"center"}}>
-      <MaskedView
-        maskElement={<Text allowFontScaling={false} style={styles.sectionTitle}>Earn Now</Text>}
-      >
-        <LinearGradient colors={['#FF1493', '#8A2BE2', '#FF1493', '#8A2BE2']} start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }}>
-          <Text allowFontScaling={false} style={[styles.sectionTitle, { opacity: 0 }]}>Earn Now</Text>
-        </LinearGradient>
-      </MaskedView>
-
-{/* <Text style={styles.sectionTitle}>Earn Now</Text> */}
-      <Pressable onPress={()=>navigation.navigate("earningScreen")} style={{paddingRight:25}}>
-        <Text allowFontScaling={false} style={{fontWeight:"bold",letterSpacing:0.5,fontSize:12}}>View all</Text>
-      </Pressable>
-      </View>
-    
-      <View style={styles.row}>
+    <ImageBackground source={require("../assets/bg.png")} style={{ flex: 1 }} imageStyle={{ resizeMode: "cover" }}>
+<Header navigation={navigation}></Header>
+    <ScrollView>
+    <View style={styles.row}>
         {/* YouTube Players */}
         <FlatList
-          scrollEnabled
-          showsHorizontalScrollIndicator={false}
+        numColumns={2}
           data={youtubeVideos}
-          horizontal
           renderItem={renderItem}
           keyExtractor={(item) => item.id.toString()}
           contentContainerStyle={styles.list}
+          columnWrapperStyle={styles.columnWrapper}
+
         />
-      </View>
+      </View> 
+    </ScrollView>
+      
     </ImageBackground>
   );
 };
@@ -110,7 +117,9 @@ const styles = StyleSheet.create({
   section: {
     // marginTop: 10,
     paddingTop:10,
-    gap:5
+    gap:5,
+    height:Dimensions.get('screen').height ,
+    paddingBottom:150
 
   },
   sectionTitle: {
@@ -121,10 +130,16 @@ const styles = StyleSheet.create({
   },
   row: {
     flexDirection: "row",
+    justifyContent:"space-around"
+   
+   
   },
   list: {
     paddingTop: 15,
-    paddingHorizontal:10
+    alignItems:"center",
+    gap:10,
+
+    // paddingHorizontal:10
   },
   card: {
     backgroundColor: '#fff',
@@ -136,22 +151,22 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     // padding: 8,
     alignItems: 'center',
-    width: 160,
-    marginRight: 10,
-    paddingBottom:10
+    width: width * 0.45,
+    paddingBottom:10,
+    
   },
   iconContainer: {
     // marginBottom: 10,
     position:"absolute",
-    top:-5,
-    left:0
+  top:70,
+    left:"40%"
     
   },
   thumbnail: {
-    width: 160,
+    width: width * 0.45,
     height: 80,
     borderRadius: 8,
-    marginBottom: 10,
+    marginBottom: 20,
   },
   videoTitle: {
     fontWeight: 'bold',
@@ -161,7 +176,7 @@ const styles = StyleSheet.create({
     letterSpacing:0.5
   },
   button: {
-    backgroundColor: '#CB1C64',
+    // backgroundColor: '#CB1C64',
     paddingVertical: 8,
     paddingHorizontal: 20,
     borderRadius: 5,
@@ -171,6 +186,20 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     fontSize: 14,
   },
+  columnWrapper:{
+    // flex:1,
+    justifyContent:"space-around",
+    gap:8
+  }
+  ,  buttonBorder: {
+    borderRadius: 10,
+    paddingHorizontal: 3,
+    paddingVertical: 2,
+    width:120,
+    marginTop:5
+
+
+  },
 });
 
-export default Section3;
+export default FacebookScreen;

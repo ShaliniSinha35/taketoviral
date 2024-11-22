@@ -9,7 +9,8 @@ const IncompleteTasks = ({ navigation }) => {
     {
       id: 0,
       title: 'Unlocking the Future: The Evolution of Video Tech',
-      image: require("../assets/mo/cy.png")
+      image: require("../assets/mo/cy.png"),
+      // url:""
 
     },
     {
@@ -58,8 +59,8 @@ const IncompleteTasks = ({ navigation }) => {
                 >
                   <Image source={require("../assets/4.png")} style={{ height: 80, width: 80, resizeMode: "contain" }}></Image>
                 </LinearGradient>
-                <View style={{ width: 160 }}>
-                  <Text numberOfLines={5} style={{ letterSpacing: 1 }}>Unlocking the Future: The Evolution of Video Tech</Text>
+                <View style={{ width: width * 0.4 }}>
+                  <Text allowFontScaling={false} numberOfLines={5} style={{ letterSpacing: 1,fontSize:12 }}>Unlocking the Future: The Evolution of Video Tech</Text>
                 </View>
                 <View style={{ alignItems: "center", gap: 5 }}>
                   <Image source={item.image} style={{ height: 30, width: 30, resizeMode: "contain" }}></Image>
@@ -124,60 +125,6 @@ const styles = StyleSheet.create({
 })
 
 export default IncompleteTasks
-// import React, { useState } from 'react';
-// import { Button, View, Text } from 'react-native';
-// import { Audio } from 'expo-av';
-
-// const IncompleteTasks = () => {
-//   const [sound, setSound] = useState();
-//   const [isPlaying, setIsPlaying] = useState(false);
-
-//   const playSound = async () => {
-//     try {
-//       console.log('Loading Sound');
-//       const { sound } = await Audio.Sound.createAsync(
-//         { uri: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3' }
-//       );
-//       setSound(sound);
-
-//       console.log('Playing Sound');
-//       await sound.playAsync();
-//       setIsPlaying(true);
-//     } catch (error) {
-//       console.error('Error playing sound:', error);
-//     }
-//   };
-
-//   const stopSound = async () => {
-//     if (sound) {
-//       console.log('Stopping Sound');
-//       await sound.stopAsync();
-//       setIsPlaying(false);
-//     }
-//   };
-
-//   React.useEffect(() => {
-//     return sound
-//       ? () => {
-//           console.log('Unloading Sound');
-//           sound.unloadAsync();
-//         }
-//       : undefined;
-//   }, [sound]);
-
-//   return (
-//     <View style={{ marginTop: 50, alignItems: 'center' }}>
-//       {/* <Text>Audio Player</Text>
-//       <Button
-//         title={isPlaying ? 'Stop' : 'Play'}
-//         onPress={isPlaying ? stopSound : playSound}
-//       /> */}
-//             <Text style={{textAlign:"center"}}>Incomplete Task</Text>
-
-//     </View>
-//   );
-// };
-
 
 
 

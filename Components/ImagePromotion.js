@@ -5,7 +5,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import MaskedView from '@react-native-community/masked-view';
 const width = Dimensions.get('screen').width;
 
-const ImagePromotion = () => {
+const ImagePromotion = ({navigation}) => {
 
     const profiles=[
         {
@@ -89,7 +89,7 @@ const ImagePromotion = () => {
         </LinearGradient>
       </MaskedView> */}
 </View>
-      <Pressable  style={{paddingRight:25}}>
+      <Pressable onPress={()=>navigation.navigate("imagePromotion")}  style={{paddingRight:25}}>
         <Text allowFontScaling={false} style={{fontWeight:"bold",letterSpacing:0.5,fontSize:12}}>View all</Text>
       </Pressable>
       </View>

@@ -5,7 +5,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import MaskedView from '@react-native-community/masked-view';
 const width = Dimensions.get('screen').width;
 
-const AudioPromotion = () => {
+const AudioPromotion = ({navigation}) => {
 
     const audios=[
         {
@@ -61,7 +61,7 @@ const AudioPromotion = () => {
           <Text allowFontScaling={false} style={styles.videoTitle}>{item.title}</Text>
     
           {/* Watch Now Button */}
-          <TouchableOpacity  style={styles.button}>
+          <TouchableOpacity onPress={()=>navigation.navigate("audio")}  style={styles.button}>
             <Text allowFontScaling={false} style={styles.buttonText}>Listen Now</Text>
           </TouchableOpacity>
         </View>
@@ -84,7 +84,7 @@ const AudioPromotion = () => {
     </View>
     
 
-      <Pressable  style={{paddingRight:25}}>
+      <Pressable  onPress={()=>navigation.navigate("audioPromotion")} style={{paddingRight:25}}>
         <Text allowFontScaling={false} style={{fontWeight:"bold",letterSpacing:0.5,fontSize:12}}>View all</Text>
       </Pressable>
       </View>

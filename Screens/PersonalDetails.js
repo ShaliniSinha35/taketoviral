@@ -50,7 +50,7 @@ const PersonalDetails = ({ navigation }) => {
           style={styles.profileImage}
         />
         <TouchableOpacity style={styles.editButton}>
-         <Text style={styles.editButtonText}>Edit Profile Image</Text>
+         <Text allowFontScaling={false} style={styles.editButtonText}>Edit Profile Image</Text>
         </TouchableOpacity>
       </View> 
       </View>
@@ -59,9 +59,9 @@ const PersonalDetails = ({ navigation }) => {
      <View style={{paddingHorizontal: 15,width:width}}>
 
       {/* Personal Details */}
-      <Text style={styles.sectionTitle}>Personal Details</Text>
+      <Text allowFontScaling={false} style={styles.sectionTitle}>Personal Details</Text>
 
-      <Text style={styles.dropdownLabel}>Full Name</Text>
+      <Text allowFontScaling={false} style={styles.dropdownLabel}>Full Name</Text>
 
 
       <LinearGradient
@@ -76,7 +76,7 @@ const PersonalDetails = ({ navigation }) => {
 
 
       {/* Gender Dropdown */}
-      <Text style={styles.dropdownLabel}>Gender</Text>
+      <Text allowFontScaling={false} style={styles.dropdownLabel}>Gender</Text>
 
       <LinearGradient
         colors={["#d6336c", "#7209b7"]}
@@ -97,7 +97,7 @@ const PersonalDetails = ({ navigation }) => {
 
 
       {/* Hobbies */}
-      <Text style={styles.dropdownLabel}>Hobbies</Text>
+      <Text allowFontScaling={false} style={styles.dropdownLabel}>Hobbies</Text>
 
       <LinearGradient
         colors={["#d6336c", "#7209b7"]}
@@ -111,7 +111,7 @@ const PersonalDetails = ({ navigation }) => {
 
       {/* Date of Birth Calendar */}
 
-      <Text style={styles.dropdownLabel}>D.O.B</Text>
+      <Text allowFontScaling={false} style={styles.dropdownLabel}>D.O.B</Text>
       <LinearGradient
         colors={["#d6336c", "#7209b7"]}
         start={{ x: 0, y: 0 }}
@@ -122,7 +122,7 @@ const PersonalDetails = ({ navigation }) => {
           onPress={() => setShowDatePicker(true)}
           style={styles.innerView}
         >
-          <Text style={styles.datePickerText}>
+          <Text allowFontScaling={false} style={styles.datePickerText}>
             {dateOfBirth.toDateString()}
           </Text>
         </TouchableOpacity>
@@ -164,7 +164,7 @@ const PersonalDetails = ({ navigation }) => {
               >
 
                     <TouchableOpacity style={{alignItems:"center",justifyContent:"center"}}>
-        <Text style={styles.submitButtonText}>Save Details</Text>
+        <Text allowFontScaling={false} style={styles.submitButtonText}>Save Details</Text>
       </TouchableOpacity>
 
 

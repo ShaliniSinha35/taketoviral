@@ -46,7 +46,7 @@ const dispatch = useDispatch()
                 </View>
 
                 <View style={styles.heading}>
-                    <Text style={{ fontWeight: "bold", letterSpacing: 1 }}>Sign Up to continue</Text>
+                    <Text allowFontScaling={false} style={{ fontWeight: "bold", letterSpacing: 1 }}>Sign Up to continue</Text>
                 </View>
 
                 <ScrollView keyboardShouldPersistTaps='handled'>
@@ -84,7 +84,7 @@ const dispatch = useDispatch()
                                     </View>
                                 </LinearGradient>
 
-                                {errors.name && <Text style={{color:"red"}}>Name is required</Text>}
+                                {errors.name && <Text allowFontScaling={false} style={{color:"red"}}>Name is required</Text>}
 
                             </View>
 
@@ -121,7 +121,7 @@ const dispatch = useDispatch()
                                     </View>
                                 </LinearGradient>
 
-                                {errors.email && <Text style={{color:"red"}}>Email is required</Text>}
+                                {errors.email && <Text allowFontScaling={false} style={{color:"red"}}>Email is required</Text>}
 
                             </View>
 
@@ -156,7 +156,7 @@ const dispatch = useDispatch()
                                      
                                     </View>
                                 </LinearGradient>
-                                {errors.mobile && <Text style={{color:"red"}}>Mobile number is required</Text>}
+                                {errors.mobile && <Text allowFontScaling={false} style={{color:"red"}}>Mobile number is required</Text>}
 
                             </View>
 
@@ -189,7 +189,7 @@ const dispatch = useDispatch()
                                     </View>
                                 </LinearGradient>
 
-                                {errors.password && <Text style={{color:"red"}}>Password is required</Text>}
+                                {errors.password && <Text allowFontScaling={false} style={{color:"red"}}>Password is required</Text>}
 
                             </View>
 

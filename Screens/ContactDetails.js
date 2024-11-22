@@ -45,7 +45,7 @@ const ContactDetails = ({ navigation }) => {
 
       {/* Contact Information */}
       <View style={{flexDirection:"row", justifyContent:"space-between",alignItems:"center"}}>
-        <Text style={styles.sectionTitle}>Contact Information</Text>
+        <Text allowFontScaling={false} style={styles.sectionTitle}>Contact Information</Text>
         <TouchableOpacity onPress={toggleContactEditing}>
         
           {!isContactEditing?<AntDesign name="edit" size={20}  color="#C93393" />:
@@ -61,7 +61,7 @@ const ContactDetails = ({ navigation }) => {
 
         <View>
 
-          <Text style={styles.dropdownLabel}>Email</Text>
+          <Text allowFontScaling={false} style={styles.dropdownLabel}>Email</Text>
 
           <LinearGradient
             colors={["#d6336c", "#7209b7"]}
@@ -74,7 +74,7 @@ const ContactDetails = ({ navigation }) => {
           </LinearGradient>
 
 
-          <Text style={styles.dropdownLabel}>Mobile Number</Text>
+          <Text allowFontScaling={false} style={styles.dropdownLabel}>Mobile Number</Text>
           <LinearGradient
             colors={["#d6336c", "#7209b7"]}
             start={{ x: 0, y: 0 }}
@@ -87,7 +87,7 @@ const ContactDetails = ({ navigation }) => {
 
 
 
-          <Text style={styles.dropdownLabel}>WhatsApp Number</Text>
+          <Text allowFontScaling={false} style={styles.dropdownLabel}>WhatsApp Number</Text>
           <LinearGradient
             colors={["#d6336c", "#7209b7"]}
             start={{ x: 0, y: 0 }}
@@ -99,7 +99,7 @@ const ContactDetails = ({ navigation }) => {
           </LinearGradient>
 
 
-          <Text style={styles.dropdownLabel}>Address</Text>
+          <Text allowFontScaling={false} style={styles.dropdownLabel}>Address</Text>
 
           <LinearGradient
             colors={["#d6336c", "#7209b7"]}
@@ -110,6 +110,23 @@ const ContactDetails = ({ navigation }) => {
 
             <TextInput style={styles.innerView} placeholder="" multiline />
           </LinearGradient>
+
+                {/* Submit Button */}
+<View style={{width:width,alignItems:"center",marginBottom:20}}>
+<LinearGradient
+                colors={["#E7258E", "#C93393", "#A84497", "#794EA0"]}
+                start={[0, 0]}
+                end={[1, 1]}
+                style={styles.gradientBackground}
+              >
+
+                    <TouchableOpacity style={{alignItems:"center",justifyContent:"center"}}>
+        <Text allowFontScaling={false} style={styles.submitButtonText}>Save Details</Text>
+      </TouchableOpacity>
+
+
+              </LinearGradient>
+</View>
         </View>
 
       }
@@ -125,23 +142,7 @@ const ContactDetails = ({ navigation }) => {
 
 
       
-      {/* Submit Button */}
-<View style={{width:width,alignItems:"center",marginBottom:20}}>
-<LinearGradient
-                colors={["#E7258E", "#C93393", "#A84497", "#794EA0"]}
-                start={[0, 0]}
-                end={[1, 1]}
-                style={styles.gradientBackground}
-              >
 
-                    <TouchableOpacity style={{alignItems:"center",justifyContent:"center"}}>
-        <Text style={styles.submitButtonText}>Save Details</Text>
-      </TouchableOpacity>
-
-
-              </LinearGradient>
-</View>
-    
 </ImageBackground>
 </ScrollView>
 
@@ -151,8 +152,8 @@ const ContactDetails = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    resizeMode:"contain",
-    width:Dimensions.get('screen').width,
+    height:Dimensions.get('screen').height
+
   },
   profileImageContainer: {
     alignItems: "center",

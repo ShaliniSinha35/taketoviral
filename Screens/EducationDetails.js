@@ -50,7 +50,7 @@ const EducationDetails = ({ navigation }) => {
 
       {/* Educational Information */}
       <View style={{flexDirection:"row",alignItems:"center",justifyContent:"space-between"}}>
-      <Text style={styles.sectionTitle}>Educational Information</Text>
+      <Text allowFontScaling={false} style={styles.sectionTitle}>Educational Information</Text>
 
 <TouchableOpacity onPress={toggleEducationEditing}>
 {!isEducationEditing?<AntDesign name="edit" size={20}  color="#C93393" />:
@@ -64,8 +64,8 @@ const EducationDetails = ({ navigation }) => {
 {isEducationEditing &&   <View>
 
    
-<Text style={styles.subSectionTitle}>Higher Qualification</Text>
-<Text style={styles.dropdownLabel}>Degree</Text>
+<Text allowFontScaling={false} style={styles.subSectionTitle}>Higher Qualification</Text>
+<Text allowFontScaling={false} style={styles.dropdownLabel}>Degree</Text>
 
 <LinearGradient
   colors={["#d6336c", "#7209b7"]}
@@ -76,7 +76,7 @@ const EducationDetails = ({ navigation }) => {
 
   <TextInput style={styles.innerView} placeholder="" />
 </LinearGradient>
-<Text style={styles.dropdownLabel}>University/College Name</Text>
+<Text allowFontScaling={false} style={styles.dropdownLabel}>University/College Name</Text>
 
 <LinearGradient
   colors={["#d6336c", "#7209b7"]}
@@ -87,7 +87,7 @@ const EducationDetails = ({ navigation }) => {
 
   <TextInput style={styles.innerView} placeholder="" />
 </LinearGradient>
-<Text style={styles.dropdownLabel}>Specialization/Branch</Text>
+<Text allowFontScaling={false} style={styles.dropdownLabel}>Specialization/Branch</Text>
 
 <LinearGradient
   colors={["#d6336c", "#7209b7"]}
@@ -98,7 +98,7 @@ const EducationDetails = ({ navigation }) => {
 
   <TextInput style={styles.innerView} placeholder="" />
 </LinearGradient>
-<Text style={styles.dropdownLabel}>Year of Passing</Text>
+<Text allowFontScaling={false} style={styles.dropdownLabel}>Year of Passing</Text>
 <LinearGradient
   colors={["#d6336c", "#7209b7"]}
   start={{ x: 0, y: 0 }}
@@ -108,7 +108,7 @@ const EducationDetails = ({ navigation }) => {
 
   <TextInput style={styles.innerView} placeholder="" keyboardType="numeric" />
 </LinearGradient>
-<Text style={styles.dropdownLabel}>Percentage/Grade/CGPA</Text>
+<Text allowFontScaling={false} style={styles.dropdownLabel}>Percentage/Grade/CGPA</Text>
 
 <LinearGradient
   colors={["#d6336c", "#7209b7"]}
@@ -119,6 +119,23 @@ const EducationDetails = ({ navigation }) => {
 
   <TextInput style={styles.innerView} placeholder="" keyboardType="numeric" />
 </LinearGradient>
+
+     {/* Submit Button */}
+     <View style={{width:width,alignItems:"center",marginBottom:20}}>
+<LinearGradient
+                colors={["#E7258E", "#C93393", "#A84497", "#794EA0"]}
+                start={[0, 0]}
+                end={[1, 1]}
+                style={styles.gradientBackground}
+              >
+
+                    <TouchableOpacity style={{alignItems:"center",justifyContent:"center"}}>
+        <Text allowFontScaling={false} style={styles.submitButtonText}>Save Details</Text>
+      </TouchableOpacity>
+
+
+              </LinearGradient>
+</View>
 </View> }
 
 
@@ -131,22 +148,7 @@ const EducationDetails = ({ navigation }) => {
 
 
       
-      {/* Submit Button */}
-<View style={{width:width,alignItems:"center",marginBottom:20}}>
-<LinearGradient
-                colors={["#E7258E", "#C93393", "#A84497", "#794EA0"]}
-                start={[0, 0]}
-                end={[1, 1]}
-                style={styles.gradientBackground}
-              >
-
-                    <TouchableOpacity style={{alignItems:"center",justifyContent:"center"}}>
-        <Text style={styles.submitButtonText}>Save Details</Text>
-      </TouchableOpacity>
-
-
-              </LinearGradient>
-</View>
+ 
     
 </ImageBackground>
 </ScrollView>
@@ -157,8 +159,7 @@ const EducationDetails = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    resizeMode:"contain",
-    width:Dimensions.get('screen').width,
+    height:Dimensions.get('screen').height
   },
   profileImageContainer: {
     alignItems: "center",

@@ -6,24 +6,24 @@ const Section1 = ({navigation}) => {
         {
             id: 1,
             icon: require("../assets/mo/cy.png"),
-            url: "youtube"
+            url: "youtubeScreen"
         },
 
         {
             id: 2,
             icon: require("../assets/mo/cf.png"),
-            url: "youtube"
+            url: "facebookScreen"
         },
         {
             id: 3,
             icon: require("../assets/mo/ci.png"),
-            url: "youtube"
+            url: "instaScreen"
         },
 
         {
             id: 4,
             icon: require("../assets/mo/ct.png"),
-            url: "youtube"
+            url: "twitterScreen"
         },
 
 
@@ -38,7 +38,7 @@ const Section1 = ({navigation}) => {
             <View style={styles.socialIcon}>
                 {
                     socialIcons.map((icon) => (
-                        <TouchableOpacity onPress={()=>navigation.navigate("youtube")}>
+                        <TouchableOpacity onPress={()=>navigation.navigate(icon.url)}>
                             <Image style={{ height: 50, width: 50, resizeMode: "contain" }} source={icon.icon}></Image>
 
                         </TouchableOpacity>

@@ -6,7 +6,7 @@ const Profile = ({navigation}) => {
   return (
     <View style={{flex:1,backgroundColor:"#fff"}}>
     <Header navigation={navigation}></Header>
-    <Text style={{textAlign:"center",marginTop:20}}>Profile</Text>
+    <Text allowFontScaling={false} style={{textAlign:"center",marginTop:20}}>Profile</Text>
   </View>
   )
 }

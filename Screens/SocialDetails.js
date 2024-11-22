@@ -45,7 +45,7 @@ const SocialDetails = ({ navigation }) => {
 
                     {/* social media */}
                     <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}>
-                        <Text style={styles.sectionTitle}>Social Media Links</Text>
+                        <Text allowFontScaling={false} style={styles.sectionTitle}>Social Media Links</Text>
                         <TouchableOpacity onPress={toggleSocialEditing}>
 
                             {!isSocialEditing ? <AntDesign name="edit" size={20} color="#C93393" /> :
@@ -61,7 +61,7 @@ const SocialDetails = ({ navigation }) => {
 
                         <View>
 
-                            <Text style={styles.dropdownLabel}>Youtube</Text>
+                            <Text allowFontScaling={false} style={styles.dropdownLabel}>Youtube</Text>
 
                             <LinearGradient
                                 colors={["#d6336c", "#7209b7"]}
@@ -74,7 +74,7 @@ const SocialDetails = ({ navigation }) => {
                             </LinearGradient>
 
 
-                            <Text style={styles.dropdownLabel}>Facebook</Text>
+                            <Text allowFontScaling={false} style={styles.dropdownLabel}>Facebook</Text>
                             <LinearGradient
                                 colors={["#d6336c", "#7209b7"]}
                                 start={{ x: 0, y: 0 }}
@@ -87,7 +87,7 @@ const SocialDetails = ({ navigation }) => {
 
 
 
-                            <Text style={styles.dropdownLabel}>Instagram</Text>
+                            <Text allowFontScaling={false} style={styles.dropdownLabel}>Instagram</Text>
                             <LinearGradient
                                 colors={["#d6336c", "#7209b7"]}
                                 start={{ x: 0, y: 0 }}
@@ -99,7 +99,7 @@ const SocialDetails = ({ navigation }) => {
                             </LinearGradient>
 
 
-                            <Text style={styles.dropdownLabel}>Twitter</Text>
+                            <Text allowFontScaling={false} style={styles.dropdownLabel}>Twitter</Text>
 
                             <LinearGradient
                                 colors={["#d6336c", "#7209b7"]}
@@ -110,12 +110,9 @@ const SocialDetails = ({ navigation }) => {
 
                                 <TextInput style={styles.innerView} placeholder="" />
                             </LinearGradient>
-                        </View>
-                    }
-                </View>
 
 
-                {/* Submit Button */}
+                                  {/* Submit Button */}
                 <View style={{ width: width, alignItems: "center", marginBottom: 20 }}>
                     <LinearGradient
                         colors={["#E7258E", "#C93393", "#A84497", "#794EA0"]}
@@ -125,12 +122,20 @@ const SocialDetails = ({ navigation }) => {
                     >
 
                         <TouchableOpacity style={{ alignItems: "center", justifyContent: "center" }}>
-                            <Text style={styles.submitButtonText}>Save Details</Text>
+                            <Text allowFontScaling={false} style={styles.submitButtonText}>Save Details</Text>
                         </TouchableOpacity>
 
 
                     </LinearGradient>
                 </View>
+                        </View>
+                    }
+
+                    
+                </View>
+
+
+          
 
             </ImageBackground>
         </ScrollView>
@@ -141,8 +146,9 @@ const SocialDetails = ({ navigation }) => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        resizeMode: "contain",
-        width: Dimensions.get('screen').width,
+        height:Dimensions.get('screen').height
+        // resizeMode: "cover",
+        // width: Dimensions.get('screen').width,
     },
     profileImageContainer: {
         alignItems: "center",
