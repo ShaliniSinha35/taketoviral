@@ -9,142 +9,206 @@ import {
   StyleSheet,
   ImageBackground,
   Dimensions,
+  Keyboard
 } from "react-native";
-
+import Toast from "react-native-toast-message";
 import { LinearGradient } from "expo-linear-gradient";
 import { Ionicons } from "@expo/vector-icons";
-import { useForm,Controller } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import Header from "../Components/Header";
 import { AntDesign } from "@expo/vector-icons";
 
-const width= Dimensions.get('screen').width
+const width = Dimensions.get('screen').width
 const ContactDetails = ({ navigation }) => {
-  
- 
-  const [isContactEditing, setIsContactEditing] = useState(false);
+  const { register, setValue, handleSubmit, control, reset, formState: { errors } } = useForm();
 
-  const toggleContactEditing = () => {
-    setIsContactEditing(!isContactEditing);
+
+  const [email, setEmail] = useState("")
+  const [mobileNumber, setMobileNumber] = useState("")
+  const [whatsappNumber, setWhatsappNumber] = useState("")
+  const [address, setAddress] = useState("")
+
+  const handleContactSubmit = (data) => {
+    Keyboard.dismiss()
+    console.log(data);
+    showToast()
+   
   };
 
-  
-
-
+  const onError: SubmitErrorHandler<FormValues> = (errors, e) => {
+    setErr(errors)
+    return console.log(errors)
+  }
+  const showToast = () => {
+    Toast.show({
+      type: 'success',
+      // text1: 'Hello',
+      text1: 'Your data is saved successfully!'
+    });
+  }
   return (
     <ScrollView keyboardShouldPersistTaps='handled' >
 
-      <ImageBackground source={require("../assets/bg.png")} style={styles.container} imageStyle={{resizeMode:"cover"}}>
-      <Header navigation={navigation}></Header>
-
-   
-     
-
-     <View style={{paddingHorizontal: 15,width:width}}>
-
-    
-
-      {/* Contact Information */}
-      <View style={{flexDirection:"row", justifyContent:"space-between",alignItems:"center"}}>
-        <Text allowFontScaling={false} style={styles.sectionTitle}>Contact Information</Text>
-        <TouchableOpacity onPress={toggleContactEditing}>
-        
-          {!isContactEditing?<AntDesign name="edit" size={20}  color="#C93393" />:
-          <Ionicons
-            name="checkmark-done"
-            size={24}
-            color="#7209b7"
-          /> }
-        </TouchableOpacity>
-      </View>
-
-      {isContactEditing &&
-
-        <View>
-
-          <Text allowFontScaling={false} style={styles.dropdownLabel}>Email</Text>
-
-          <LinearGradient
-            colors={["#d6336c", "#7209b7"]}
-            start={{ x: 0, y: 0 }}
-            end={{ x: 1, y: 0 }}
-            style={styles.gradientBorder}
-          >
-
-            <TextInput style={styles.innerView} placeholder="" keyboardType="email-address" />
-          </LinearGradient>
-
-
-          <Text allowFontScaling={false} style={styles.dropdownLabel}>Mobile Number</Text>
-          <LinearGradient
-            colors={["#d6336c", "#7209b7"]}
-            start={{ x: 0, y: 0 }}
-            end={{ x: 1, y: 0 }}
-            style={styles.gradientBorder}
-          >
-
-            <TextInput style={styles.innerView} placeholder="" keyboardType="phone-pad" />
-          </LinearGradient>
+      <ImageBackground source={require("../assets/bg.png")} style={styles.container} imageStyle={{ resizeMode: "cover" }}>
+        <Header navigation={navigation}></Header>
 
 
 
-          <Text allowFontScaling={false} style={styles.dropdownLabel}>WhatsApp Number</Text>
-          <LinearGradient
-            colors={["#d6336c", "#7209b7"]}
-            start={{ x: 0, y: 0 }}
-            end={{ x: 1, y: 0 }}
-            style={styles.gradientBorder}
-          >
 
-            <TextInput style={styles.innerView} placeholder="" keyboardType="phone-pad" />
-          </LinearGradient>
+        <View style={{ paddingHorizontal: 15, width: width }}>
 
 
-          <Text allowFontScaling={false} style={styles.dropdownLabel}>Address</Text>
 
-          <LinearGradient
-            colors={["#d6336c", "#7209b7"]}
-            start={{ x: 0, y: 0 }}
-            end={{ x: 1, y: 0 }}
-            style={styles.gradientBorder}
-          >
+          {/* Contact Information */}
+          <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}>
+            <Text allowFontScaling={false} style={styles.sectionTitle}>Contact Information</Text>
 
-            <TextInput style={styles.innerView} placeholder="" multiline />
-          </LinearGradient>
+          </View>
 
-                {/* Submit Button */}
-<View style={{width:width,alignItems:"center",marginBottom:20}}>
-<LinearGradient
+
+
+          <View>
+
+            <Text allowFontScaling={false} style={styles.dropdownLabel}>Email</Text>
+
+            <LinearGradient
+              colors={["#d6336c", "#7209b7"]}
+              start={{ x: 0, y: 0 }}
+              end={{ x: 1, y: 0 }}
+              style={styles.gradientBorder}
+            >
+
+              <Controller
+                control={control}
+                render={({ field: { onChange, onBlur, value } }) => (
+                  <TextInput
+                    style={styles.innerView}
+                    placeholder=""
+                    keyboardType="email-address"
+                    placeholderTextColor="#333"
+                    onBlur={onBlur}
+                    onChangeText={value => onChange(value)}
+                    value={value}
+                  />
+                )}
+                name="email"
+              />
+
+            </LinearGradient>
+
+
+            <Text allowFontScaling={false} style={styles.dropdownLabel}>Mobile Number</Text>
+            <LinearGradient
+              colors={["#d6336c", "#7209b7"]}
+              start={{ x: 0, y: 0 }}
+              end={{ x: 1, y: 0 }}
+              style={styles.gradientBorder}
+            >
+              <Controller
+                control={control}
+                render={({ field: { onChange, onBlur, value } }) => (
+                  <TextInput
+                    style={styles.innerView}
+                    placeholder=""
+                     keyboardType="phone-pad" 
+                    placeholderTextColor="#333"
+                    onBlur={onBlur}
+                    onChangeText={value => onChange(value)}
+                    value={value}
+                  />
+                )}
+                name="mobile"
+              />
+            </LinearGradient>
+
+
+
+            <Text allowFontScaling={false} style={styles.dropdownLabel}>WhatsApp Number</Text>
+            <LinearGradient
+              colors={["#d6336c", "#7209b7"]}
+              start={{ x: 0, y: 0 }}
+              end={{ x: 1, y: 0 }}
+              style={styles.gradientBorder}
+            >
+<Controller
+                control={control}
+                render={({ field: { onChange, onBlur, value } }) => (
+                  <TextInput
+                    style={styles.innerView}
+                    placeholder=""
+                     keyboardType="phone-pad" 
+                    placeholderTextColor="#333"
+                    onBlur={onBlur}
+                    onChangeText={value => onChange(value)}
+                    value={value}
+                  />
+                )}
+                name="whatsapp"
+              />
+            </LinearGradient>
+
+
+            <Text allowFontScaling={false} style={styles.dropdownLabel}>Address</Text>
+
+            <LinearGradient
+              colors={["#d6336c", "#7209b7"]}
+              start={{ x: 0, y: 0 }}
+              end={{ x: 1, y: 0 }}
+              style={styles.gradientBorder}
+            >
+
+<Controller
+                control={control}
+                render={({ field: { onChange, onBlur, value } }) => (
+                  <TextInput
+                    style={styles.innerView}
+                    placeholder=""
+                    placeholderTextColor="#333"
+                    onBlur={onBlur}
+                    onChangeText={value => onChange(value)}
+                    value={value}
+                    multiline
+                  />
+                )}
+                name="address"
+              />
+
+            </LinearGradient>
+
+            {/* Submit Button */}
+            <View style={{ width: width, alignItems: "center", marginBottom: 20 }}>
+              <LinearGradient
                 colors={["#E7258E", "#C93393", "#A84497", "#794EA0"]}
                 start={[0, 0]}
                 end={[1, 1]}
                 style={styles.gradientBackground}
               >
 
-                    <TouchableOpacity style={{alignItems:"center",justifyContent:"center"}}>
-        <Text allowFontScaling={false} style={styles.submitButtonText}>Save Details</Text>
-      </TouchableOpacity>
+                <TouchableOpacity onPress={handleSubmit(handleContactSubmit)} style={{ alignItems: "center", justifyContent: "center" }}>
+                  <Text allowFontScaling={false} style={styles.submitButtonText}>Save Details</Text>
+                </TouchableOpacity>
 
 
               </LinearGradient>
-</View>
+            </View>
+          </View>
+
+
+
+
+
+
+
+
         </View>
 
-      }
 
 
-
-     
-
-
-</View>
+<Toast position="bottom" bottomOffset={200}></Toast>
 
 
-
-
-      
-
-</ImageBackground>
-</ScrollView>
+      </ImageBackground>
+    </ScrollView>
 
   );
 };
@@ -152,17 +216,17 @@ const ContactDetails = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    height:Dimensions.get('screen').height
+    height: Dimensions.get('screen').height
 
   },
   profileImageContainer: {
     alignItems: "center",
     marginBottom: 20,
     marginTop: 10,
-    height:128,
-    width:125,
-    borderRadius:90,
-    backgroundColor:"#d6336c"
+    height: 128,
+    width: 125,
+    borderRadius: 90,
+    backgroundColor: "#d6336c"
   },
   profileImage: {
     width: 120,
@@ -239,7 +303,7 @@ const styles = StyleSheet.create({
     color: "#fff",
     fontSize: 18,
     fontWeight: "bold",
-    letterSpacing:1
+    letterSpacing: 1
   },
   gradientBorder: {
     padding: 2, // This creates the thickness of the border
@@ -262,8 +326,8 @@ const styles = StyleSheet.create({
     padding: 12,
     width: '75%',
     marginTop: 20,
-    justifyContent:"center",
-    
+    justifyContent: "center",
+
   },
 });
 

@@ -9,6 +9,7 @@ import {
   StyleSheet,
   ImageBackground,
   Dimensions,
+  Keyboard
 } from "react-native";
 import { Picker } from "@react-native-picker/picker"; // For dropdown
 import DateTimePicker from "@react-native-community/datetimepicker"; // For calendar
@@ -17,24 +18,47 @@ import { Ionicons } from "@expo/vector-icons";
 import { useForm,Controller } from "react-hook-form";
 import Header from "../Components/Header";
 import { AntDesign } from "@expo/vector-icons";
-
+import Toast from "react-native-toast-message";
 const width= Dimensions.get('screen').width
 const EducationDetails = ({ navigation }) => {
  
 
+  const { register, setValue, handleSubmit, control, reset, formState: { errors } } = useForm();
+
+  const [showDatePicker, setShowDatePicker] = useState(false);
+   
  
+ 
+const [degree,setDegree]= useState("")
+const [college,setCollege]  = useState("")
+const [branch,setBranch]= useState("")
+const [passingYear,setPassingYear]= useState(new Date())
 
-  const [isEducationEditing,setIsEducationEditing]= useState(false)
-
-  const toggleEducationEditing=()=>{
-    setIsEducationEditing(!isEducationEditing)
+const onDateChange = (event, selectedDate) => {
+  setShowDatePicker(false);
+  if (selectedDate) {
+    setPassingYear(selectedDate);
   }
+};
+const handleEducationSubmit = (data) => {
+  Keyboard.dismiss()
+  console.log(data,passingYear);
+  showToast()
+ 
+};
 
+const onError: SubmitErrorHandler<FormValues> = (errors, e) => {
+  setErr(errors)
+  return console.log(errors)
+}
 
-  
-
-
-
+const showToast = () => {
+  Toast.show({
+    type: 'success',
+    // text1: 'Hello',
+    text1: 'Your data is saved successfully!'
+  });
+}
   return (
     <ScrollView keyboardShouldPersistTaps='handled' >
 
@@ -52,16 +76,17 @@ const EducationDetails = ({ navigation }) => {
       <View style={{flexDirection:"row",alignItems:"center",justifyContent:"space-between"}}>
       <Text allowFontScaling={false} style={styles.sectionTitle}>Educational Information</Text>
 
-<TouchableOpacity onPress={toggleEducationEditing}>
+{/* <TouchableOpacity onPress={toggleEducationEditing}>
 {!isEducationEditing?<AntDesign name="edit" size={20}  color="#C93393" />:
           <Ionicons
             name="checkmark-done"
             size={24}
             color="#7209b7"
           /> }
-  </TouchableOpacity>
+  </TouchableOpacity> */}
       </View>
-{isEducationEditing &&   <View>
+
+  <View>
 
    
 <Text allowFontScaling={false} style={styles.subSectionTitle}>Higher Qualification</Text>
@@ -73,8 +98,21 @@ const EducationDetails = ({ navigation }) => {
   end={{ x: 1, y: 0 }}
   style={styles.gradientBorder}
 >
+<Controller
+                      control={control}
+                      render={({ field: { onChange, onBlur, value } }) => (
+                        <TextInput
+                        style={styles.innerView}
+                        placeholder=""
+                        placeholderTextColor="#333"
+                          onBlur={onBlur}
+                          onChangeText={value => onChange(value)}
+                          value={value}
+                        />
+                      )}
+                      name="degree"
+                    />
 
-  <TextInput style={styles.innerView} placeholder="" />
 </LinearGradient>
 <Text allowFontScaling={false} style={styles.dropdownLabel}>University/College Name</Text>
 
@@ -85,8 +123,21 @@ const EducationDetails = ({ navigation }) => {
   style={styles.gradientBorder}
 >
 
-  <TextInput style={styles.innerView} placeholder="" />
-</LinearGradient>
+<Controller
+                      control={control}
+                      render={({ field: { onChange, onBlur, value } }) => (
+                        <TextInput
+                        style={styles.innerView}
+                        placeholder=""
+                        placeholderTextColor="#333"
+                          onBlur={onBlur}
+                          onChangeText={value => onChange(value)}
+                          value={value}
+                        />
+                      )}
+                      name="college"
+                    />
+                    </LinearGradient>
 <Text allowFontScaling={false} style={styles.dropdownLabel}>Specialization/Branch</Text>
 
 <LinearGradient
@@ -96,29 +147,48 @@ const EducationDetails = ({ navigation }) => {
   style={styles.gradientBorder}
 >
 
-  <TextInput style={styles.innerView} placeholder="" />
-</LinearGradient>
+<Controller
+                      control={control}
+                      render={({ field: { onChange, onBlur, value } }) => (
+                        <TextInput
+                        style={styles.innerView}
+                        placeholder=""
+                        placeholderTextColor="#333"
+                          onBlur={onBlur}
+                          onChangeText={value => onChange(value)}
+                          value={value}
+                        />
+                      )}
+                      name="branch"
+                    />
+                    </LinearGradient>
 <Text allowFontScaling={false} style={styles.dropdownLabel}>Year of Passing</Text>
 <LinearGradient
-  colors={["#d6336c", "#7209b7"]}
-  start={{ x: 0, y: 0 }}
-  end={{ x: 1, y: 0 }}
-  style={styles.gradientBorder}
->
+        colors={["#d6336c", "#7209b7"]}
+        start={{ x: 0, y: 0 }}
+        end={{ x: 1, y: 0 }}
+        style={styles.gradientBorder}
+      >
+        <TouchableOpacity
+          onPress={() => setShowDatePicker(true)}
+          style={styles.innerView}
+        >
+          <Text allowFontScaling={false} style={styles.datePickerText}>
+            {passingYear?passingYear.toDateString():null}
+          </Text>
+        </TouchableOpacity>
+        {showDatePicker && (
+          <DateTimePicker
+            value={passingYear}
+            mode="date"
+            display="default"
+            onChange={onDateChange}
+            maximumDate={new Date()} // Prevent selecting future dates
+          />
+        )}
 
-  <TextInput style={styles.innerView} placeholder="" keyboardType="numeric" />
-</LinearGradient>
-<Text allowFontScaling={false} style={styles.dropdownLabel}>Percentage/Grade/CGPA</Text>
+      </LinearGradient>
 
-<LinearGradient
-  colors={["#d6336c", "#7209b7"]}
-  start={{ x: 0, y: 0 }}
-  end={{ x: 1, y: 0 }}
-  style={styles.gradientBorder}
->
-
-  <TextInput style={styles.innerView} placeholder="" keyboardType="numeric" />
-</LinearGradient>
 
      {/* Submit Button */}
      <View style={{width:width,alignItems:"center",marginBottom:20}}>
@@ -129,14 +199,14 @@ const EducationDetails = ({ navigation }) => {
                 style={styles.gradientBackground}
               >
 
-                    <TouchableOpacity style={{alignItems:"center",justifyContent:"center"}}>
+                    <TouchableOpacity onPress={handleSubmit(handleEducationSubmit)} style={{alignItems:"center",justifyContent:"center"}}>
         <Text allowFontScaling={false} style={styles.submitButtonText}>Save Details</Text>
       </TouchableOpacity>
 
 
               </LinearGradient>
 </View>
-</View> }
+</View> 
 
 
 
@@ -146,7 +216,7 @@ const EducationDetails = ({ navigation }) => {
 
 
 
-
+<Toast position="bottom" bottomOffset={280}></Toast>
       
  
     

@@ -40,6 +40,15 @@
     "runtimeVersion": {
       "policy": "appVersion"
     },
+    "plugins": [
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "The app accesses your photos to let you share them with your friends."
+        }
+      ]
+    ],
+    
     "updates": {
       "url": "https://u.expo.dev/f1f29108-76ef-4331-8084-f4d3a5ce2502",
       "enabled": true,

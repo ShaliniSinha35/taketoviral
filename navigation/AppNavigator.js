@@ -9,7 +9,6 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import { StyleSheet, ScrollView, View, Text, FlatList, TouchableOpacity, Image, Dimensions } from 'react-native';
 import Home from "../Screens/Home";
-import Profile from "../Screens/Profile";
 import CompleteTask from '../Screens/CompleteTask';
 import IncompleteTasks from '../Screens/IncompleteTasks';
 import Share from '../Screens/Share';
@@ -35,6 +34,8 @@ import FacebookScreen from '../Screens/FacebookScreen';
 import YoutubeScreen from '../Screens/YoutubeScreen';
 import Audio from '../Screens/Audio';
 import FacebookVideos from '../Screens/FacebookVideos';
+import Social from '../Screens/Social';
+import ImageScreen from '../Screens/ImageScreen';
 
 
 const Stack = createStackNavigator();
@@ -87,7 +88,6 @@ export const AppNavigator = () => {
                     <Stack.Screen name="Login" options={{ headerShown: false }} component={LoginScreen} />
 
                 }
-                <Stack.Screen name="Profile" options={{ headerShown: false }} component={Profile} />
                 <Stack.Screen name="CompleteTask" options={{ headerShown: false }} component={CompleteTask} />
                 <Stack.Screen name="IncompleteTask" options={{ headerShown: false }} component={IncompleteTasks} />
                 <Stack.Screen name="youtube" options={{ headerShown: false }} component={YouTubeVideos} />
@@ -110,6 +110,8 @@ export const AppNavigator = () => {
                 <Stack.Screen name="audio" options={{ headerShown: false }} component={Audio} />
                 <Stack.Screen name="facebookVideos" options={{ headerShown: false }} component={FacebookVideos} />
 
+                <Stack.Screen name="singleSocial" options={{ headerShown: false }} component={Social} />
+                <Stack.Screen name="singleImage" options={{ headerShown: false }} component={ImageScreen} />
 
 
             </Stack.Navigator>
@@ -204,7 +206,7 @@ export const AppNavigator = () => {
 
 
                     <Tab.Screen
-                        name="profile"
+                        name="profilescreen"
                         component={ProfileScreen}
                         options={{
                             headerShown: false,

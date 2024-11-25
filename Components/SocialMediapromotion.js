@@ -40,7 +40,7 @@ const SocialMediapromotion = ({navigation}) => {
   const renderItem = ({ item }) => (
     <View style={styles.card}>
       {/* YouTube Thumbnail */}
-      <TouchableOpacity>
+      <TouchableOpacity onPress={()=>navigation.navigate("singleSocial")}>
         <Image
           source={item.img}
           style={styles.thumbnail}

@@ -9,6 +9,8 @@ import {
   StyleSheet,
   ImageBackground,
   Dimensions,
+  Keyboard,
+  Pressable
 } from "react-native";
 import { Picker } from "@react-native-picker/picker"; // For dropdown
 import DateTimePicker from "@react-native-community/datetimepicker"; // For calendar
@@ -17,9 +19,12 @@ import { Ionicons } from "@expo/vector-icons";
 import { useForm, Controller } from "react-hook-form";
 import Header from "../Components/Header";
 import { AntDesign } from "@expo/vector-icons";
+import * as ImagePicker from 'expo-image-picker';
 
 const width = Dimensions.get('screen').width
 const ProfileScreen = ({ navigation }) => {
+  const { register, setValue, handleSubmit, control, reset, formState: { errors } } = useForm();
+
   const [profileImage, setProfileImage] = useState(null);
   const [gender, setGender] = useState(""); // For dropdown
   const [dateOfBirth, setDateOfBirth] = useState(new Date()); // For date picker
@@ -31,6 +36,24 @@ const ProfileScreen = ({ navigation }) => {
       setDateOfBirth(selectedDate);
     }
   };
+
+  const [image, setImage] = useState(null);
+
+  const pickImage = async () => {
+    // No permissions request is necessary for launching the image library
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      quality: 1,
+    });
+
+    console.log(result);
+
+    if (!result.canceled) {
+      setImage(result.assets[0].uri);
+    }
+  };
+
 
 
   const [isProfileEditing, setIsProfileEditing] = useState(true);
@@ -70,6 +93,69 @@ const ProfileScreen = ({ navigation }) => {
   }
 
 
+  const [educationDetails,setEducationDetails]= useState([])
+  const [personalDetails,setPersonalDetails]= useState([])
+  const [contactDetails,setContactDetails]= useState([])
+  const [socialDetails,setSocialDetails]= useState([])
+
+
+  const handlePersonalInfoSubmit = (data) => {
+    Keyboard.dismiss()
+    console.log(data);
+    setIsProfileEditing(false)
+   
+  };
+
+//contact
+const [email, setEmail] = useState("")
+  const [mobileNumber, setMobileNumber] = useState("")
+  const [whatsappNumber, setWhatsappNumber] = useState("")
+  const [address, setAddress] = useState("")
+
+  const handleContactSubmit = (data) => {
+    Keyboard.dismiss()
+    console.log(data);
+    setIsContactEditing(false)
+   
+  };
+
+//education
+
+  const [showPassingDatePicker, setShowPassingDatePicker] = useState(false);
+
+const [degree,setDegree]= useState("")
+const [college,setCollege]  = useState("")
+const [branch,setBranch]= useState("")
+const [passingYear,setPassingYear]= useState(new Date())
+
+const onPassingDateChange = (event, selectedDate) => {
+  setShowPassingDatePicker(false);
+  if (selectedDate) {
+    setPassingYear(selectedDate);
+  }
+};
+const handleEducationSubmit = (data) => {
+  Keyboard.dismiss()
+  console.log(data,passingYear);
+  setIsEducationEditing(false)
+ 
+};
+
+//social
+
+const [youtube,setYoutube]= useState("")
+const [facebook,setFacebook]= useState("")
+const [instagram,setInstagram]= useState("")
+const [twitter,setTwitter]= useState("")
+
+const handleSocialSubmit = (data) => {
+    Keyboard.dismiss()
+    console.log(data);
+    setIsSocialEditing(false)
+   
+  };
+
+  
 
   return (
 
@@ -80,15 +166,15 @@ const ProfileScreen = ({ navigation }) => {
         {/* Profile Image */}
         <View style={{ width: width, alignItems: "center", marginBottom: 25 }}>
           <View style={styles.profileImageContainer}>
-            <Image
-              source={
-                profileImage
-                  ? { uri: profileImage }
-                  : require("../assets/profile.jpg") // Use a default profile image
-              }
-              style={styles.profileImage}
-            />
-            <TouchableOpacity style={styles.editButton}>
+          <Image
+          source={
+        image
+              ? { uri: image }
+              : require("../assets/profile.jpg") // Use a default profile image
+          }
+          style={styles.profileImage}
+        />
+            <TouchableOpacity style={styles.editButton} onPress={()=>pickImage()}>
               <Text allowFontScaling={false} style={styles.editButtonText}>Edit Profile Image</Text>
             </TouchableOpacity>
           </View>
@@ -99,7 +185,7 @@ const ProfileScreen = ({ navigation }) => {
 
           {/* Personal Details */}
 
-          <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}>
+          <Pressable onPress={toggleProfileEditing} style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}>
             <Text allowFontScaling={false} style={styles.sectionTitle}>Personal Details</Text>
             <TouchableOpacity onPress={toggleProfileEditing}>
 
@@ -110,7 +196,7 @@ const ProfileScreen = ({ navigation }) => {
                   color="#7209b7"
                 />}
             </TouchableOpacity>
-          </View>
+          </Pressable>
 
           {isProfileEditing &&
             <View>
@@ -118,78 +204,106 @@ const ProfileScreen = ({ navigation }) => {
 
 
               <LinearGradient
-                colors={["#d6336c", "#7209b7"]}
-                start={{ x: 0, y: 0 }}
-                end={{ x: 1, y: 0 }}
-                style={styles.gradientBorder}
-              >
-
-                <TextInput style={styles.innerView} placeholder="" />
-              </LinearGradient>
+        colors={["#d6336c", "#7209b7"]}
+        start={{ x: 0, y: 0 }}
+        end={{ x: 1, y: 0 }}
+        style={styles.gradientBorder}
+      >
 
 
-              {/* Gender Dropdown */}
-              <Text allowFontScaling={false} style={styles.dropdownLabel}>Gender</Text>
-
-              <LinearGradient
-                colors={["#d6336c", "#7209b7"]}
-                start={{ x: 0, y: 0 }}
-                end={{ x: 1, y: 0 }}
-                style={styles.gradientBorder}
-              >
-                <Picker
-                  selectedValue={gender}
-                  onValueChange={(value) => setGender(value)}
-                  style={styles.innerView}
-                >
-                  <Picker.Item label="Select Gender" value="" />
-                  <Picker.Item label="Male" value="male" />
-                  <Picker.Item label="Female" value="female" />
-                </Picker>
-              </LinearGradient>
+<Controller
+                      control={control}
+                      render={({ field: { onChange, onBlur, value } }) => (
+                        <TextInput
+                        style={styles.innerView}
+                        placeholder="Enter your name"
+                        placeholderTextColor="#333"
+                          onBlur={onBlur}
+                          onChangeText={value => onChange(value)}
+                          value={value}
+                        />
+                      )}
+                      name="name"
+                    />
+      </LinearGradient>
 
 
-              {/* Hobbies */}
-              <Text allowFontScaling={false} style={styles.dropdownLabel}>Hobbies</Text>
+      {/* Gender Dropdown */}
+      <Text allowFontScaling={false} style={styles.dropdownLabel}>Gender</Text>
 
-              <LinearGradient
-                colors={["#d6336c", "#7209b7"]}
-                start={{ x: 0, y: 0 }}
-                end={{ x: 1, y: 0 }}
-                style={styles.gradientBorder}
-              >
+      <LinearGradient
+        colors={["#d6336c", "#7209b7"]}
+        start={{ x: 0, y: 0 }}
+        end={{ x: 1, y: 0 }}
+        style={styles.gradientBorder}
+      >
+        <Picker
+          selectedValue={gender}
+          onValueChange={(value) => setGender(value)}
+          style={styles.innerView}
+        >
+          <Picker.Item label="Select Gender" value="" />
+          <Picker.Item label="Male" value="male" />
+          <Picker.Item label="Female" value="female" />
+        </Picker>
+      </LinearGradient>
 
-                <TextInput style={styles.innerView} placeholder="" />
-              </LinearGradient>
 
-              {/* Date of Birth Calendar */}
+      {/* Hobbies */}
+      <Text allowFontScaling={false} style={styles.dropdownLabel}>Hobbies</Text>
 
-              <Text allowFontScaling={false} style={styles.dropdownLabel}>D.O.B</Text>
-              <LinearGradient
-                colors={["#d6336c", "#7209b7"]}
-                start={{ x: 0, y: 0 }}
-                end={{ x: 1, y: 0 }}
-                style={styles.gradientBorder}
-              >
-                <TouchableOpacity
-                  onPress={() => setShowDatePicker(true)}
-                  style={styles.innerView}
-                >
-                  <Text allowFontScaling={false} style={styles.datePickerText}>
-                    {dateOfBirth.toDateString()}
-                  </Text>
-                </TouchableOpacity>
-                {showDatePicker && (
-                  <DateTimePicker
-                    value={dateOfBirth}
-                    mode="date"
-                    display="default"
-                    onChange={onDateChange}
-                    maximumDate={new Date()} // Prevent selecting future dates
-                  />
-                )}
+      <LinearGradient
+        colors={["#d6336c", "#7209b7"]}
+        start={{ x: 0, y: 0 }}
+        end={{ x: 1, y: 0 }}
+        style={styles.gradientBorder}
+      >
 
-              </LinearGradient>
+<Controller
+                      control={control}
+                      render={({ field: { onChange, onBlur, value } }) => (
+                        <TextInput
+                        style={styles.innerView}
+                        placeholder="Enter your hobby"
+                        placeholderTextColor="#333"
+                          onBlur={onBlur}
+                          onChangeText={value => onChange(value)}
+                          value={value}
+                        />
+                      )}
+                      name="hobby"
+                    />
+      </LinearGradient>
+
+      {/* Date of Birth Calendar */}
+
+      <Text allowFontScaling={false} style={styles.dropdownLabel}>D.O.B</Text>
+      <LinearGradient
+        colors={["#d6336c", "#7209b7"]}
+        start={{ x: 0, y: 0 }}
+        end={{ x: 1, y: 0 }}
+        style={styles.gradientBorder}
+      >
+        <TouchableOpacity
+          onPress={() => setShowDatePicker(true)}
+          style={styles.innerView}
+        >
+          <Text allowFontScaling={false} style={styles.datePickerText}>
+            {dateOfBirth?dateOfBirth.toDateString():"Enter D.O.B"}
+          </Text>
+        </TouchableOpacity>
+        {showDatePicker && (
+          <DateTimePicker
+            value={dateOfBirth}
+            mode="date"
+            display="default"
+            onChange={onDateChange}
+            maximumDate={new Date()} // Prevent selecting future dates
+          />
+        )}
+
+      </LinearGradient>
+
    {/* Submit Button */}
    <View style={{ width: width, alignItems: "center", marginBottom: 20 }}>
           <LinearGradient
@@ -199,7 +313,7 @@ const ProfileScreen = ({ navigation }) => {
             style={styles.gradientBackground}
           >
 
-            <TouchableOpacity style={{ alignItems: "center", justifyContent: "center" }}>
+            <TouchableOpacity onPress={handleSubmit(handlePersonalInfoSubmit)} style={{ alignItems: "center", justifyContent: "center" }}>
               <Text allowFontScaling={false}style={styles.submitButtonText}>Save Details</Text>
             </TouchableOpacity>
 
@@ -213,7 +327,7 @@ const ProfileScreen = ({ navigation }) => {
 <Text allowFontScaling={false} style={{borderWidth:0.4,borderColor:"#D0D0D0",height:0.5,width:"100%",marginTop:5,marginBottom:5}}></Text>
 
           {/* Contact Information */}
-          <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}>
+          <Pressable onPress={toggleContactEditing} style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}>
             <Text allowFontScaling={false} style={styles.sectionTitle}>Contact Information</Text>
             <TouchableOpacity onPress={toggleContactEditing}>
 
@@ -224,61 +338,115 @@ const ProfileScreen = ({ navigation }) => {
                   color="#7209b7"
                 />}
             </TouchableOpacity>
-          </View>
+          </Pressable>
 
           {isContactEditing &&
 
             <View>
 
               <Text allowFontScaling={false} style={styles.dropdownLabel}>Email</Text>
-
               <LinearGradient
-                colors={["#d6336c", "#7209b7"]}
-                start={{ x: 0, y: 0 }}
-                end={{ x: 1, y: 0 }}
-                style={styles.gradientBorder}
-              >
+              colors={["#d6336c", "#7209b7"]}
+              start={{ x: 0, y: 0 }}
+              end={{ x: 1, y: 0 }}
+              style={styles.gradientBorder}
+            >
+              <Controller
+                control={control}
+                render={({ field: { onChange, onBlur, value } }) => (
+                  <TextInput
+                    style={styles.innerView}
+                    placeholder=""
+                    keyboardType="email-address"
+                    placeholderTextColor="#333"
+                    onBlur={onBlur}
+                    onChangeText={value => onChange(value)}
+                    value={value}
+                  />
+                )}
+                name="email"
+              />
 
-                <TextInput style={styles.innerView} placeholder="" keyboardType="email-address" />
-              </LinearGradient>
-
-
-              <Text allowFontScaling={false} style={styles.dropdownLabel}>Mobile Number</Text>
-              <LinearGradient
-                colors={["#d6336c", "#7209b7"]}
-                start={{ x: 0, y: 0 }}
-                end={{ x: 1, y: 0 }}
-                style={styles.gradientBorder}
-              >
-
-                <TextInput style={styles.innerView} placeholder="" keyboardType="phone-pad" />
-              </LinearGradient>
-
-
-
-              <Text allowFontScaling={false} style={styles.dropdownLabel}>WhatsApp Number</Text>
-              <LinearGradient
-                colors={["#d6336c", "#7209b7"]}
-                start={{ x: 0, y: 0 }}
-                end={{ x: 1, y: 0 }}
-                style={styles.gradientBorder}
-              >
-
-                <TextInput style={styles.innerView} placeholder="" keyboardType="phone-pad" />
-              </LinearGradient>
+            </LinearGradient>
 
 
-              <Text allowFontScaling={false} style={styles.dropdownLabel}>Address</Text>
+            <Text allowFontScaling={false} style={styles.dropdownLabel}>Mobile Number</Text>
+            <LinearGradient
+              colors={["#d6336c", "#7209b7"]}
+              start={{ x: 0, y: 0 }}
+              end={{ x: 1, y: 0 }}
+              style={styles.gradientBorder}
+            >
+              <Controller
+                control={control}
+                render={({ field: { onChange, onBlur, value } }) => (
+                  <TextInput
+                    style={styles.innerView}
+                    placeholder=""
+                     keyboardType="phone-pad" 
+                    placeholderTextColor="#333"
+                    onBlur={onBlur}
+                    onChangeText={value => onChange(value)}
+                    value={value}
+                  />
+                )}
+                name="mobile"
+              />
+            </LinearGradient>
 
-              <LinearGradient
-                colors={["#d6336c", "#7209b7"]}
-                start={{ x: 0, y: 0 }}
-                end={{ x: 1, y: 0 }}
-                style={styles.gradientBorder}
-              >
 
-                <TextInput style={styles.innerView} placeholder="" multiline />
-              </LinearGradient>
+
+            <Text allowFontScaling={false} style={styles.dropdownLabel}>WhatsApp Number</Text>
+            <LinearGradient
+              colors={["#d6336c", "#7209b7"]}
+              start={{ x: 0, y: 0 }}
+              end={{ x: 1, y: 0 }}
+              style={styles.gradientBorder}
+            >
+<Controller
+                control={control}
+                render={({ field: { onChange, onBlur, value } }) => (
+                  <TextInput
+                    style={styles.innerView}
+                    placeholder=""
+                     keyboardType="phone-pad" 
+                    placeholderTextColor="#333"
+                    onBlur={onBlur}
+                    onChangeText={value => onChange(value)}
+                    value={value}
+                  />
+                )}
+                name="whatsapp"
+              />
+            </LinearGradient>
+
+
+            <Text allowFontScaling={false} style={styles.dropdownLabel}>Address</Text>
+
+            <LinearGradient
+              colors={["#d6336c", "#7209b7"]}
+              start={{ x: 0, y: 0 }}
+              end={{ x: 1, y: 0 }}
+              style={styles.gradientBorder}
+            >
+
+<Controller
+                control={control}
+                render={({ field: { onChange, onBlur, value } }) => (
+                  <TextInput
+                    style={styles.innerView}
+                    placeholder=""
+                    placeholderTextColor="#333"
+                    onBlur={onBlur}
+                    onChangeText={value => onChange(value)}
+                    value={value}
+                    multiline
+                  />
+                )}
+                name="address"
+              />
+
+            </LinearGradient>
 
                  {/* Submit Button */}
         <View style={{ width: width, alignItems: "center", marginBottom: 20 }}>
@@ -289,7 +457,7 @@ const ProfileScreen = ({ navigation }) => {
             style={styles.gradientBackground}
           >
 
-            <TouchableOpacity style={{ alignItems: "center", justifyContent: "center" }}>
+            <TouchableOpacity onPress={handleSubmit(handleContactSubmit)} style={{ alignItems: "center", justifyContent: "center" }}>
               <Text allowFontScaling={false} style={styles.submitButtonText}>Save Details</Text>
             </TouchableOpacity>
 
@@ -304,7 +472,7 @@ const ProfileScreen = ({ navigation }) => {
 
 
           {/* Educational Information */}
-          <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
+          <Pressable onPress={toggleEducationEditing} style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
             <Text allowFontScaling={false} style={styles.sectionTitle}>Educational Information</Text>
 
             <TouchableOpacity onPress={toggleEducationEditing}>
@@ -315,7 +483,7 @@ const ProfileScreen = ({ navigation }) => {
                   color="#7209b7"
                 />}
             </TouchableOpacity>
-          </View>
+          </Pressable>
           {isEducationEditing && <View>
 
 
@@ -323,57 +491,103 @@ const ProfileScreen = ({ navigation }) => {
             <Text allowFontScaling={false} style={styles.dropdownLabel}>Degree</Text>
 
             <LinearGradient
-              colors={["#d6336c", "#7209b7"]}
-              start={{ x: 0, y: 0 }}
-              end={{ x: 1, y: 0 }}
-              style={styles.gradientBorder}
-            >
+  colors={["#d6336c", "#7209b7"]}
+  start={{ x: 0, y: 0 }}
+  end={{ x: 1, y: 0 }}
+  style={styles.gradientBorder}
+>
+<Controller
+                      control={control}
+                      render={({ field: { onChange, onBlur, value } }) => (
+                        <TextInput
+                        style={styles.innerView}
+                        placeholder=""
+                        placeholderTextColor="#333"
+                          onBlur={onBlur}
+                          onChangeText={value => onChange(value)}
+                          value={value}
+                        />
+                      )}
+                      name="degree"
+                    />
 
-              <TextInput style={styles.innerView} placeholder="" />
-            </LinearGradient>
-            <Text allowFontScaling={false} style={styles.dropdownLabel}>University/College Name</Text>
+</LinearGradient>
+<Text allowFontScaling={false} style={styles.dropdownLabel}>University/College Name</Text>
 
-            <LinearGradient
-              colors={["#d6336c", "#7209b7"]}
-              start={{ x: 0, y: 0 }}
-              end={{ x: 1, y: 0 }}
-              style={styles.gradientBorder}
-            >
+<LinearGradient
+  colors={["#d6336c", "#7209b7"]}
+  start={{ x: 0, y: 0 }}
+  end={{ x: 1, y: 0 }}
+  style={styles.gradientBorder}
+>
 
-              <TextInput style={styles.innerView} placeholder="" />
-            </LinearGradient>
-            <Text allowFontScaling={false} style={styles.dropdownLabel}>Specialization/Branch</Text>
+<Controller
+                      control={control}
+                      render={({ field: { onChange, onBlur, value } }) => (
+                        <TextInput
+                        style={styles.innerView}
+                        placeholder=""
+                        placeholderTextColor="#333"
+                          onBlur={onBlur}
+                          onChangeText={value => onChange(value)}
+                          value={value}
+                        />
+                      )}
+                      name="college"
+                    />
+                    </LinearGradient>
+<Text allowFontScaling={false} style={styles.dropdownLabel}>Specialization/Branch</Text>
 
-            <LinearGradient
-              colors={["#d6336c", "#7209b7"]}
-              start={{ x: 0, y: 0 }}
-              end={{ x: 1, y: 0 }}
-              style={styles.gradientBorder}
-            >
+<LinearGradient
+  colors={["#d6336c", "#7209b7"]}
+  start={{ x: 0, y: 0 }}
+  end={{ x: 1, y: 0 }}
+  style={styles.gradientBorder}
+>
 
-              <TextInput style={styles.innerView} placeholder="" />
-            </LinearGradient>
-            <Text allowFontScaling={false} style={styles.dropdownLabel}>Year of Passing</Text>
-            <LinearGradient
-              colors={["#d6336c", "#7209b7"]}
-              start={{ x: 0, y: 0 }}
-              end={{ x: 1, y: 0 }}
-              style={styles.gradientBorder}
-            >
+<Controller
+                      control={control}
+                      render={({ field: { onChange, onBlur, value } }) => (
+                        <TextInput
+                        style={styles.innerView}
+                        placeholder=""
+                        placeholderTextColor="#333"
+                          onBlur={onBlur}
+                          onChangeText={value => onChange(value)}
+                          value={value}
+                        />
+                      )}
+                      name="branch"
+                    />
+                    </LinearGradient>
+<Text allowFontScaling={false} style={styles.dropdownLabel}>Year of Passing</Text>
+<LinearGradient
+        colors={["#d6336c", "#7209b7"]}
+        start={{ x: 0, y: 0 }}
+        end={{ x: 1, y: 0 }}
+        style={styles.gradientBorder}
+      >
+        <TouchableOpacity
+          onPress={() => setShowDatePicker(true)}
+          style={styles.innerView}
+        >
+          <Text allowFontScaling={false} style={styles.datePickerText}>
+            {passingYear?passingYear.toDateString():null}
+          </Text>
+        </TouchableOpacity>
+        {showPassingDatePicker && (
+          <DateTimePicker
+            value={passingYear}
+            mode="date"
+            display="default"
+            onChange={onPassingDateChange}
+            maximumDate={new Date()} // Prevent selecting future dates
+          />
+        )}
 
-              <TextInput style={styles.innerView} placeholder="" keyboardType="numeric" />
-            </LinearGradient>
-            <Text allowFontScaling={false} style={styles.dropdownLabel}>Percentage/Grade/CGPA</Text>
+      </LinearGradient>
 
-            <LinearGradient
-              colors={["#d6336c", "#7209b7"]}
-              start={{ x: 0, y: 0 }}
-              end={{ x: 1, y: 0 }}
-              style={styles.gradientBorder}
-            >
 
-              <TextInput style={styles.innerView} placeholder="" keyboardType="numeric" />
-            </LinearGradient>
 
                {/* Submit Button */}
         <View style={{ width: width, alignItems: "center", marginBottom: 20 }}>
@@ -384,7 +598,7 @@ const ProfileScreen = ({ navigation }) => {
             style={styles.gradientBackground}
           >
 
-            <TouchableOpacity style={{ alignItems: "center", justifyContent: "center" }}>
+            <TouchableOpacity onPress={handleSubmit(handleEducationSubmit)} style={{ alignItems: "center", justifyContent: "center" }}>
               <Text allowFontScaling={false} style={styles.submitButtonText}>Save Details</Text>
             </TouchableOpacity>
 
@@ -396,7 +610,7 @@ const ProfileScreen = ({ navigation }) => {
           <Text allowFontScaling={false} style={{borderWidth:0.4,borderColor:"#D0D0D0",height:0.5,width:"100%",marginTop:5,marginBottom:5}}></Text>
 
           {/* social media */}
-          <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}>
+          <Pressable  onPress={toggleSocialEditing} style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}>
             <Text allowFontScaling={false} style={styles.sectionTitle}>Social Media Links</Text>
             <TouchableOpacity onPress={toggleSocialEditing}>
 
@@ -407,7 +621,7 @@ const ProfileScreen = ({ navigation }) => {
                   color="#7209b7"
                 />}
             </TouchableOpacity>
-          </View>
+          </Pressable>
 
           {isSocialEditing &&
 
@@ -422,46 +636,97 @@ const ProfileScreen = ({ navigation }) => {
                 style={styles.gradientBorder}
               >
 
-                <TextInput style={styles.innerView} placeholder="" />
-              </LinearGradient>
+<Controller
+  control={control}
+  render={({ field: { onChange, onBlur, value } }) => (
+    <TextInput
+    style={styles.innerView}
+    placeholder=""
+    placeholderTextColor="#333"
+      onBlur={onBlur}
+      onChangeText={value => onChange(value)}
+      value={value}
+    />
+  )}
+  name="youtube"
+/>
+        </LinearGradient>
 
 
-              <Text allowFontScaling={false} style={styles.dropdownLabel}>Facebook</Text>
-              <LinearGradient
-                colors={["#d6336c", "#7209b7"]}
-                start={{ x: 0, y: 0 }}
-                end={{ x: 1, y: 0 }}
-                style={styles.gradientBorder}
-              >
+        <Text allowFontScaling={false} style={styles.dropdownLabel}>Facebook</Text>
+        <LinearGradient
+            colors={["#d6336c", "#7209b7"]}
+            start={{ x: 0, y: 0 }}
+            end={{ x: 1, y: 0 }}
+            style={styles.gradientBorder}
+        >
+<Controller
+  control={control}
+  render={({ field: { onChange, onBlur, value } }) => (
+    <TextInput
+    style={styles.innerView}
+    placeholder=""
+    placeholderTextColor="#333"
+      onBlur={onBlur}
+      onChangeText={value => onChange(value)}
+      value={value}
+    />
+  )}
+  name="facebook"
+/>
+        </LinearGradient>
 
-                <TextInput style={styles.innerView} placeholder="" />
-              </LinearGradient>
 
 
+        <Text allowFontScaling={false} style={styles.dropdownLabel}>Instagram</Text>
+        <LinearGradient
+            colors={["#d6336c", "#7209b7"]}
+            start={{ x: 0, y: 0 }}
+            end={{ x: 1, y: 0 }}
+            style={styles.gradientBorder}
+        >
+<Controller
+  control={control}
+  render={({ field: { onChange, onBlur, value } }) => (
+    <TextInput
+    style={styles.innerView}
+    placeholder=""
+    placeholderTextColor="#333"
+      onBlur={onBlur}
+      onChangeText={value => onChange(value)}
+      value={value}
+    />
+  )}
+  name="instagram"
+/>
+        </LinearGradient>
 
-              <Text allowFontScaling={false} style={styles.dropdownLabel}>Instagram</Text>
-              <LinearGradient
-                colors={["#d6336c", "#7209b7"]}
-                start={{ x: 0, y: 0 }}
-                end={{ x: 1, y: 0 }}
-                style={styles.gradientBorder}
-              >
 
-                <TextInput style={styles.innerView} placeholder="" />
-              </LinearGradient>
+        <Text allowFontScaling={false} style={styles.dropdownLabel}>Twitter</Text>
+
+        <LinearGradient
+            colors={["#d6336c", "#7209b7"]}
+            start={{ x: 0, y: 0 }}
+            end={{ x: 1, y: 0 }}
+            style={styles.gradientBorder}
+        >
+<Controller
+  control={control}
+  render={({ field: { onChange, onBlur, value } }) => (
+    <TextInput
+    style={styles.innerView}
+    placeholder=""
+    placeholderTextColor="#333"
+      onBlur={onBlur}
+      onChangeText={value => onChange(value)}
+      value={value}
+    />
+  )}
+  name="twitter"
+/>
+        </LinearGradient>
 
 
-              <Text allowFontScaling={false} style={styles.dropdownLabel}>Twitter</Text>
-
-              <LinearGradient
-                colors={["#d6336c", "#7209b7"]}
-                start={{ x: 0, y: 0 }}
-                end={{ x: 1, y: 0 }}
-                style={styles.gradientBorder}
-              >
-
-                <TextInput style={styles.innerView} placeholder="" />
-              </LinearGradient>
 
                            {/* Submit Button */}
         <View style={{ width: width, alignItems: "center", marginBottom: 20 }}>
@@ -472,7 +737,7 @@ const ProfileScreen = ({ navigation }) => {
             style={styles.gradientBackground}
           >
 
-            <TouchableOpacity style={{ alignItems: "center", justifyContent: "center" }}>
+            <TouchableOpacity onPress={handleSubmit(handleSocialSubmit)} style={{ alignItems: "center", justifyContent: "center" }}>
               <Text allowFontScaling={false} style={styles.submitButtonText}>Save Details</Text>
             </TouchableOpacity>
 
@@ -518,6 +783,7 @@ const styles = StyleSheet.create({
     height: 120,
     borderRadius: 60,
     backgroundColor: "#ddd",
+    resizeMode:"contain"
   },
   editButton: {
     marginTop: 20,

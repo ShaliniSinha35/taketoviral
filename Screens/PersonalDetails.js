@@ -16,14 +16,23 @@ import { LinearGradient } from "expo-linear-gradient";
 import { Ionicons } from "@expo/vector-icons";
 import { useForm,Controller } from "react-hook-form";
 import Header from "../Components/Header";
+import * as ImagePicker from 'expo-image-picker';
+import { Keyboard } from "react-native";
+import Toast from 'react-native-toast-message';
 
 const width= Dimensions.get('screen').width
 const height = Dimensions.get('screen').height
 const PersonalDetails = ({ navigation }) => {
+
+
+  const { register, setValue, handleSubmit, control, reset, formState: { errors } } = useForm();
+
   const [profileImage, setProfileImage] = useState(null);
   const [gender, setGender] = useState(""); // For dropdown
   const [dateOfBirth, setDateOfBirth] = useState(new Date()); // For date picker
   const [showDatePicker, setShowDatePicker] = useState(false); // To toggle date picker
+  const [name,setName]= useState("")
+  const [hobbies,setHobbies]= useState("")
 
   const onDateChange = (event, selectedDate) => {
     setShowDatePicker(false);
@@ -31,6 +40,48 @@ const PersonalDetails = ({ navigation }) => {
       setDateOfBirth(selectedDate);
     }
   };
+
+
+  const [image, setImage] = useState(null);
+
+  const pickImage = async () => {
+    // No permissions request is necessary for launching the image library
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      quality: 1,
+    });
+
+    console.log(result);
+
+    if (!result.canceled) {
+      setImage(result.assets[0].uri);
+    }
+  };
+  
+
+  const handlePersonalInfoSubmit = (data) => {
+    Keyboard.dismiss()
+    console.log(data);
+    if(data){
+      showToast()
+
+    }
+   
+  };
+
+  const onError: SubmitErrorHandler<FormValues> = (errors, e) => {
+    setErr(errors)
+    return console.log(errors)
+  }
+
+  const showToast = () => {
+    Toast.show({
+      type: 'success',
+      // text1: 'Hello',
+      text1: 'Your data is saved successfully!'
+    });
+  }
 
   return (
     <ScrollView keyboardShouldPersistTaps='handled' >
@@ -43,13 +94,13 @@ const PersonalDetails = ({ navigation }) => {
       <View style={styles.profileImageContainer}>
         <Image
           source={
-            profileImage
-              ? { uri: profileImage }
+        image
+              ? { uri: image }
               : require("../assets/profile.jpg") // Use a default profile image
           }
           style={styles.profileImage}
         />
-        <TouchableOpacity style={styles.editButton}>
+        <TouchableOpacity style={styles.editButton} onPress={()=>pickImage()}>
          <Text allowFontScaling={false} style={styles.editButtonText}>Edit Profile Image</Text>
         </TouchableOpacity>
       </View> 
@@ -71,7 +122,21 @@ const PersonalDetails = ({ navigation }) => {
         style={styles.gradientBorder}
       >
 
-        <TextInput style={styles.innerView} placeholder="" />
+
+<Controller
+                      control={control}
+                      render={({ field: { onChange, onBlur, value } }) => (
+                        <TextInput
+                        style={styles.innerView}
+                        placeholder="Enter your name"
+                        placeholderTextColor="#333"
+                          onBlur={onBlur}
+                          onChangeText={value => onChange(value)}
+                          value={value}
+                        />
+                      )}
+                      name="name"
+                    />
       </LinearGradient>
 
 
@@ -106,7 +171,20 @@ const PersonalDetails = ({ navigation }) => {
         style={styles.gradientBorder}
       >
 
-        <TextInput style={styles.innerView} placeholder="" />
+<Controller
+                      control={control}
+                      render={({ field: { onChange, onBlur, value } }) => (
+                        <TextInput
+                        style={styles.innerView}
+                        placeholder="Enter your hobby"
+                        placeholderTextColor="#333"
+                          onBlur={onBlur}
+                          onChangeText={value => onChange(value)}
+                          value={value}
+                        />
+                      )}
+                      name="hobby"
+                    />
       </LinearGradient>
 
       {/* Date of Birth Calendar */}
@@ -123,7 +201,7 @@ const PersonalDetails = ({ navigation }) => {
           style={styles.innerView}
         >
           <Text allowFontScaling={false} style={styles.datePickerText}>
-            {dateOfBirth.toDateString()}
+            {dateOfBirth?dateOfBirth.toDateString():"Enter D.O.B"}
           </Text>
         </TouchableOpacity>
         {showDatePicker && (
@@ -163,13 +241,15 @@ const PersonalDetails = ({ navigation }) => {
                 style={styles.gradientBackground}
               >
 
-                    <TouchableOpacity style={{alignItems:"center",justifyContent:"center"}}>
+                    <TouchableOpacity onPress={handleSubmit(handlePersonalInfoSubmit)} style={{alignItems:"center",justifyContent:"center"}}>
         <Text allowFontScaling={false} style={styles.submitButtonText}>Save Details</Text>
       </TouchableOpacity>
 
 
               </LinearGradient>
 </View>
+<Toast       position='bottom'
+              bottomOffset={80}></Toast>
     
 </ImageBackground>
 </ScrollView>
@@ -197,17 +277,18 @@ const styles = StyleSheet.create({
     height: 120,
     borderRadius: 60,
     backgroundColor: "#ddd",
+    resizeMode:"contain"
   },
   editButton: {
     marginTop: 20,
     backgroundColor: "#d6336c",
-    paddingHorizontal: 12,
+    paddingHorizontal: 18,
     paddingVertical: 6,
     borderRadius: 5,
   },
   editButtonText: {
     color: "#fff",
-    fontSize: 14,
+    fontSize: 11,
   },
   sectionTitle: {
     fontSize: 17,
@@ -252,7 +333,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   datePickerText: {
-    fontSize: 14,
+    fontSize: 12,
     color: "#333",
     marginVertical: 10
   },

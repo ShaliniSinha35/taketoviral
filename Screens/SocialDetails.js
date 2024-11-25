@@ -9,6 +9,8 @@ import {
     StyleSheet,
     ImageBackground,
     Dimensions,
+    Keyboard,
+    KeyboardAvoidingView
 } from "react-native";
 import { Picker } from "@react-native-picker/picker"; // For dropdown
 import DateTimePicker from "@react-native-community/datetimepicker"; // For calendar
@@ -17,125 +19,191 @@ import { Ionicons } from "@expo/vector-icons";
 import { useForm, Controller } from "react-hook-form";
 import Header from "../Components/Header";
 import { AntDesign } from "@expo/vector-icons";
+import Toast from "react-native-toast-message";
 
 const width = Dimensions.get('screen').width
 const SocialDetails = ({ navigation }) => {
-  
+    const { register, setValue, handleSubmit, control, reset, formState: { errors } } = useForm();
 
 
-    const [isSocialEditing, setIsSocialEditing] = useState(false)
 
-    const toggleSocialEditing = () => {
-        setIsSocialEditing(!isSocialEditing)
+   
+const [youtube,setYoutube]= useState("")
+const [facebook,setFacebook]= useState("")
+const [instagram,setInstagram]= useState("")
+const [twitter,setTwitter]= useState("")
+
+const handleSocialSubmit = (data) => {
+    Keyboard.dismiss()
+    console.log(data);
+    if(data){
+        showToast()
     }
+    showToast()
 
+   
+  };
 
+  const onError: SubmitErrorHandler<FormValues> = (errors, e) => {
+    setErr(errors)
+    return console.log(errors)
+  }
 
+  const showToast = () => {
+    Toast.show({
+      type: 'success',
+      // text1: 'Hello',
+      text1: 'Your data is saved successfully!'
+    });
+  }
     return (
         <ScrollView keyboardShouldPersistTaps='handled' >
 
             <ImageBackground source={require("../assets/bg.png")} style={styles.container} imageStyle={{ resizeMode: "cover" }}>
                 <Header navigation={navigation}></Header>
+                <Toast position="bottom" bottomOffset={180}>
+        </Toast>   
 
                 {/* Profile Image */}
 
-
-                <View style={{ paddingHorizontal: 15, width: width }}>
-
-
-                    {/* social media */}
-                    <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}>
-                        <Text allowFontScaling={false} style={styles.sectionTitle}>Social Media Links</Text>
-                        <TouchableOpacity onPress={toggleSocialEditing}>
-
-                            {!isSocialEditing ? <AntDesign name="edit" size={20} color="#C93393" /> :
-                                <Ionicons
-                                    name="checkmark-done"
-                                    size={24}
-                                    color="#7209b7"
-                                />}
-                        </TouchableOpacity>
-                    </View>
-
-                    {isSocialEditing &&
-
-                        <View>
-
-                            <Text allowFontScaling={false} style={styles.dropdownLabel}>Youtube</Text>
-
-                            <LinearGradient
-                                colors={["#d6336c", "#7209b7"]}
-                                start={{ x: 0, y: 0 }}
-                                end={{ x: 1, y: 0 }}
-                                style={styles.gradientBorder}
-                            >
-
-                                <TextInput style={styles.innerView} placeholder="" />
-                            </LinearGradient>
+<KeyboardAvoidingView>
+<View style={{ paddingHorizontal: 15, width: width }}>
 
 
-                            <Text allowFontScaling={false} style={styles.dropdownLabel}>Facebook</Text>
-                            <LinearGradient
-                                colors={["#d6336c", "#7209b7"]}
-                                start={{ x: 0, y: 0 }}
-                                end={{ x: 1, y: 0 }}
-                                style={styles.gradientBorder}
-                            >
-
-                                <TextInput style={styles.innerView} placeholder="" />
-                            </LinearGradient>
+{/* social media */}
+<View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}>
+    <Text allowFontScaling={false} style={styles.sectionTitle}>Social Media Links</Text>
+  
+</View>
 
 
 
-                            <Text allowFontScaling={false} style={styles.dropdownLabel}>Instagram</Text>
-                            <LinearGradient
-                                colors={["#d6336c", "#7209b7"]}
-                                start={{ x: 0, y: 0 }}
-                                end={{ x: 1, y: 0 }}
-                                style={styles.gradientBorder}
-                            >
+    <View>
 
-                                <TextInput style={styles.innerView} placeholder="" />
-                            </LinearGradient>
+        <Text allowFontScaling={false} style={styles.dropdownLabel}>Youtube</Text>
 
-
-                            <Text allowFontScaling={false} style={styles.dropdownLabel}>Twitter</Text>
-
-                            <LinearGradient
-                                colors={["#d6336c", "#7209b7"]}
-                                start={{ x: 0, y: 0 }}
-                                end={{ x: 1, y: 0 }}
-                                style={styles.gradientBorder}
-                            >
-
-                                <TextInput style={styles.innerView} placeholder="" />
-                            </LinearGradient>
-
-
-                                  {/* Submit Button */}
-                <View style={{ width: width, alignItems: "center", marginBottom: 20 }}>
-                    <LinearGradient
-                        colors={["#E7258E", "#C93393", "#A84497", "#794EA0"]}
-                        start={[0, 0]}
-                        end={[1, 1]}
-                        style={styles.gradientBackground}
-                    >
-
-                        <TouchableOpacity style={{ alignItems: "center", justifyContent: "center" }}>
-                            <Text allowFontScaling={false} style={styles.submitButtonText}>Save Details</Text>
-                        </TouchableOpacity>
+        <LinearGradient
+            colors={["#d6336c", "#7209b7"]}
+            start={{ x: 0, y: 0 }}
+            end={{ x: 1, y: 0 }}
+            style={styles.gradientBorder}
+        >
+<Controller
+  control={control}
+  render={({ field: { onChange, onBlur, value } }) => (
+    <TextInput
+    style={styles.innerView}
+    placeholder=""
+    placeholderTextColor="#333"
+      onBlur={onBlur}
+      onChangeText={value => onChange(value)}
+      value={value}
+    />
+  )}
+  name="youtube"
+/>
+        </LinearGradient>
 
 
-                    </LinearGradient>
-                </View>
-                        </View>
-                    }
+        <Text allowFontScaling={false} style={styles.dropdownLabel}>Facebook</Text>
+        <LinearGradient
+            colors={["#d6336c", "#7209b7"]}
+            start={{ x: 0, y: 0 }}
+            end={{ x: 1, y: 0 }}
+            style={styles.gradientBorder}
+        >
+<Controller
+  control={control}
+  render={({ field: { onChange, onBlur, value } }) => (
+    <TextInput
+    style={styles.innerView}
+    placeholder=""
+    placeholderTextColor="#333"
+      onBlur={onBlur}
+      onChangeText={value => onChange(value)}
+      value={value}
+    />
+  )}
+  name="facebook"
+/>
+        </LinearGradient>
 
-                    
-                </View>
 
 
-          
+        <Text allowFontScaling={false} style={styles.dropdownLabel}>Instagram</Text>
+        <LinearGradient
+            colors={["#d6336c", "#7209b7"]}
+            start={{ x: 0, y: 0 }}
+            end={{ x: 1, y: 0 }}
+            style={styles.gradientBorder}
+        >
+<Controller
+  control={control}
+  render={({ field: { onChange, onBlur, value } }) => (
+    <TextInput
+    style={styles.innerView}
+    placeholder=""
+    placeholderTextColor="#333"
+      onBlur={onBlur}
+      onChangeText={value => onChange(value)}
+      value={value}
+    />
+  )}
+  name="instagram"
+/>
+        </LinearGradient>
+
+
+        <Text allowFontScaling={false} style={styles.dropdownLabel}>Twitter</Text>
+
+        <LinearGradient
+            colors={["#d6336c", "#7209b7"]}
+            start={{ x: 0, y: 0 }}
+            end={{ x: 1, y: 0 }}
+            style={styles.gradientBorder}
+        >
+<Controller
+  control={control}
+  render={({ field: { onChange, onBlur, value } }) => (
+    <TextInput
+    style={styles.innerView}
+    placeholder=""
+    placeholderTextColor="#333"
+      onBlur={onBlur}
+      onChangeText={value => onChange(value)}
+      value={value}
+    />
+  )}
+  name="twitter"
+/>
+        </LinearGradient>
+
+
+              {/* Submit Button */}
+<View style={{ width: width, alignItems: "center", marginBottom: 20 }}>
+<LinearGradient
+    colors={["#E7258E", "#C93393", "#A84497", "#794EA0"]}
+    start={[0, 0]}
+    end={[1, 1]}
+    style={styles.gradientBackground}
+>
+
+    <TouchableOpacity onPress={handleSubmit(handleSocialSubmit)} style={{ alignItems: "center", justifyContent: "center" }}>
+        <Text allowFontScaling={false} style={styles.submitButtonText}>Save Details</Text>
+    </TouchableOpacity>
+
+
+</LinearGradient>
+</View>
+    </View>
+
+
+
+</View>
+</KeyboardAvoidingView>
+
+
+
 
             </ImageBackground>
         </ScrollView>

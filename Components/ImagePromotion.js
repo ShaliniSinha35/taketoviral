@@ -51,7 +51,7 @@ const ImagePromotion = ({navigation}) => {
           </View> */}
     
           {/* YouTube Thumbnail */}
-          <TouchableOpacity>
+          <TouchableOpacity onPress={()=>navigation.navigate("singleImage")}>
             <Image
               source={item.img}
               style={styles.thumbnail}
